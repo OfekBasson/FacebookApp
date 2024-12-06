@@ -1,0 +1,22 @@
+# Ignore build folders
+bin/
+obj/
+
+# Ignore the API library files
+#FBApi/Facebook.dll
+#FBApi/FbGraphApiWrapper.dll
+#FBApi/ReleaseNotes - READ ME!!.txt
+
+# Ignore the backup folder
+#MigrationBackup/
+
+# Ignore the video file
+finalprojectvideo - Made with Clipchamp.mp4
+
+# Ignore solution and project-specific temporary files
+#*.suo
+#*.user
+#*.userosscache
+#*.sln.docstates
+
+.vs/
