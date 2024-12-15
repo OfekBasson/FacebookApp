@@ -1,0 +1,95 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\10User\\Desktop\\Ofek\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{905D5BF1-A7E4-4440-85E8-84772F5312D5}|FacebookWinFormsApp\\FacebookWinFormsApp.csproj|c:\\users\\10user\\desktop\\ofek\\facebookwinformsapp\\formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{905D5BF1-A7E4-4440-85E8-84772F5312D5}|FacebookWinFormsApp\\FacebookWinFormsApp.csproj|solutionrelative:facebookwinformsapp\\formmain.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{905D5BF1-A7E4-4440-85E8-84772F5312D5}|FacebookWinFormsApp\\FacebookWinFormsApp.csproj|c:\\users\\10user\\desktop\\ofek\\facebookwinformsapp\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{905D5BF1-A7E4-4440-85E8-84772F5312D5}|FacebookWinFormsApp\\FacebookWinFormsApp.csproj|solutionrelative:facebookwinformsapp\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{905D5BF1-A7E4-4440-85E8-84772F5312D5}|FacebookWinFormsApp\\FacebookWinFormsApp.csproj|c:\\users\\10user\\desktop\\ofek\\facebookwinformsapp\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{905D5BF1-A7E4-4440-85E8-84772F5312D5}|FacebookWinFormsApp\\FacebookWinFormsApp.csproj|solutionrelative:facebookwinformsapp\\formmain.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{905D5BF1-A7E4-4440-85E8-84772F5312D5}|FacebookWinFormsApp\\FacebookWinFormsApp.csproj|c:\\users\\10user\\desktop\\ofek\\facebookwinformsapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{905D5BF1-A7E4-4440-85E8-84772F5312D5}|FacebookWinFormsApp\\FacebookWinFormsApp.csproj|solutionrelative:facebookwinformsapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 1,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "FormMain.cs",
+              "DocumentMoniker": "C:\\Users\\10User\\Desktop\\Ofek\\FacebookWinFormsApp\\FormMain.cs",
+              "RelativeDocumentMoniker": "FacebookWinFormsApp\\FormMain.cs",
+              "ToolTip": "C:\\Users\\10User\\Desktop\\Ofek\\FacebookWinFormsApp\\FormMain.cs",
+              "RelativeToolTip": "FacebookWinFormsApp\\FormMain.cs",
+              "ViewState": "AgIAADMAAAAAAAAAAAD4v0AAAAAaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-01T16:40:37.042Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "FormMain.Designer.cs",
+              "DocumentMoniker": "C:\\Users\\10User\\Desktop\\Ofek\\FacebookWinFormsApp\\FormMain.Designer.cs",
+              "RelativeDocumentMoniker": "FacebookWinFormsApp\\FormMain.Designer.cs",
+              "ToolTip": "C:\\Users\\10User\\Desktop\\Ofek\\FacebookWinFormsApp\\FormMain.Designer.cs",
+              "RelativeToolTip": "FacebookWinFormsApp\\FormMain.Designer.cs",
+              "ViewState": "AgIAAGkBAAAAAAAAAAAmwHsBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-01T16:38:22.381Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "FormMain.cs [Design]",
+              "DocumentMoniker": "C:\\Users\\10User\\Desktop\\Ofek\\FacebookWinFormsApp\\FormMain.cs",
+              "RelativeDocumentMoniker": "FacebookWinFormsApp\\FormMain.cs",
+              "ToolTip": "C:\\Users\\10User\\Desktop\\Ofek\\FacebookWinFormsApp\\FormMain.cs [Design]",
+              "RelativeToolTip": "FacebookWinFormsApp\\FormMain.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-01T16:33:59.921Z",
+              "EditorCaption": " [Design]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\10User\\Desktop\\Ofek\\FacebookWinFormsApp\\Program.cs",
+              "RelativeDocumentMoniker": "FacebookWinFormsApp\\Program.cs",
+              "ToolTip": "C:\\Users\\10User\\Desktop\\Ofek\\FacebookWinFormsApp\\Program.cs",
+              "RelativeToolTip": "FacebookWinFormsApp\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwBUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-01T16:33:35.856Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -12,37 +12,73 @@ using System.Runtime.Remoting.Messaging;
 
 namespace BasicFacebookFeatures
 {
-    // TODO: Implement Video change...
-    // TODO: Why is the access token text needed? If it is I have to implement it again
-    public partial class FormMain : Form
+    // TODO: Why is the access token text needed?
+    internal partial class FormMain : Form
     {
-        //TODO: Is this name with the underscore good? should the "f" be capital letter?
-        private FacebookDataAndFormSynchronizer _facebookDataAndFormSynchronizer;
-        // TODO: Should it be with m_ before foemUpdator?
-        // TODO: Should I add private/public before this?
+        private string m_AppId = "917683610037169";
+        private UIBridge m_bridge { get; set; }
         
         public FormMain()
         {
             InitializeComponent();
-            _facebookDataAndFormSynchronizer = new FacebookDataAndFormSynchronizer(buttonLogin, buttonLogout, pictureBoxProfile, new List<UserDataSection>() { this.infoDataSection, this.postsDataSection, this.videosDataSection, this.friendsDataSection, this.galleryDataSection });
-            // TODO: Why is that?
-            FacebookWrapper.FacebookService.s_CollectionLimit = 25;
+            m_bridge = new UIBridge();
+            foreach (LinkSearchListControl control in userDataGroupBox.Controls.OfType<LinkSearchListControl>())
+            {
+                control.m_bridge = m_bridge;
+            }
+            m_bridge.LogInError += bridge_LogInError;
+            this.axWindowsMediaPlayer1.Visible = false;
+            FacebookService.s_CollectionLimit = 25;
         }
+
+
+        private void bridge_LogInError()
+        {
+            MessageBox.Show("Login Error, please try again");
+        }
+
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            // TODO: What's this clipboard text?
-            Clipboard.SetText("design.patterns");
-            //TODO: Is it good? not one responsibility...
-            _facebookDataAndFormSynchronizer.LogInAndUpdateForm(textBoxAppID.Text);
+            Clipboard.SetText("ofekofekfacebook@gmail.com");
+            //Clipboard.SetText("design.patterns");
+            User loggedInUser = m_bridge.LogIn(m_AppId);
+            if (loggedInUser != null)
+            {
+                updateFormOnLogin();
+            }
         }
 
+        private void updateFormOnLogin()
+        {
+            buttonLogout.Enabled = true;
+            buttonLogin.Enabled = false;
+            buttonLogin.BackColor = Color.LightGreen;
+            buttonLogin.Text = $"Logged in as {m_bridge.m_loggedInUser.Name}";
+            pictureBoxProfile.ImageLocation = m_bridge.m_loggedInUser.PictureNormalURL;
+            this.userDataGroupBox.Visible = true;
+            this.axWindowsMediaPlayer1.Visible = true;
+        }
 
-
-        // TODO: Is it ok to invoke 2 different classes here? or should I wrap it in one class?
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            _facebookDataAndFormSynchronizer.LogoutAndUpdateForm();
+            m_bridge.Logout();
+            UpdateFormOnLogout();
+        }
+
+        private void UpdateFormOnLogout()
+        {
+            this.buttonLogin.Text = "Login";
+            this.buttonLogin.BackColor = this.buttonLogout.BackColor;
+            this.buttonLogin.Enabled = true;
+            this.buttonLogout.Enabled = false;
+            this.pictureBoxProfile.ImageLocation = null;
+            foreach (LinkSearchListControl control in userDataGroupBox.Controls.OfType<LinkSearchListControl>())
+            {
+                control.hideDataFromListBox();
+            }
+            this.userDataGroupBox.Visible = false;
+            this.axWindowsMediaPlayer1.Visible = false;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -55,7 +91,6 @@ namespace BasicFacebookFeatures
 
         }
 
-
         // TODO: implement
         //private void listBoxPosts_SelectedIndexChanged(object sender, EventArgs e)
         //{
@@ -66,7 +101,6 @@ namespace BasicFacebookFeatures
         //    }
         //}
 
-        // TODO: Are the tabs necessary?
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
@@ -84,30 +118,12 @@ namespace BasicFacebookFeatures
         //        pictureBox1.ImageLocation = selectedPhoto.PictureAlbumURL;
         //}
 
-        // TODO: implement
-        //private void listBoxVideos_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    Video video = listBoxVideos.SelectedItem as Video;
-        //    try
-        //    {
-        //        if (video != null && video.URL != null)
-        //        {
-        //            axWindowsMediaPlayer1.URL = video.URL;
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Cannot play the selected video :(");
-        //        }
-        //    }
-        //    catch (Exception ex) { }
-
-        //}
+ 
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
 
         }
-        // TODO: For what do we need it?
         private void FormMain_Load(object sender, EventArgs e)
         {
 
@@ -134,6 +150,21 @@ namespace BasicFacebookFeatures
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void pictureBoxProfile_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void VideosDataSection_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void FacebookLogo_Click(object sender, EventArgs e)
         {
 
         }

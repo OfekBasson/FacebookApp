@@ -1,6 +1,6 @@
 ﻿namespace BasicFacebookFeatures
 {
-    partial class UserDataSection
+    partial class LinkSearchListControl
     {
         /// <summary> 
         /// Required designer variable.
@@ -65,14 +65,14 @@
             this.listBox.TabIndex = 1;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
-            // UserDataSection
+            // LinkSearchListControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.link);
-            this.Name = "UserDataSection";
+            this.Name = "LinkSearchListControl";
             this.Size = new System.Drawing.Size(143, 167);
             this.Load += new System.EventHandler(this.UserDataSection_Load);
             this.ResumeLayout(false);
