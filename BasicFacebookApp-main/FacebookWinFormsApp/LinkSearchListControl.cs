@@ -28,7 +28,7 @@ namespace BasicFacebookFeatures
         public LinkSearchListControl()
         {
             InitializeComponent();
-            m_linkText = $"Show {this.Name.Replace("DataSection", "")}";
+            m_linkText = $"Show {Name.Replace("DataSection", "")}";
         }
 
         private void UserDataSection_Load(object sender, EventArgs e)
@@ -37,11 +37,6 @@ namespace BasicFacebookFeatures
 
         private void link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            //TODO: Implement
-            //if (this.Name == "infoDataSection")
-            //{
-            //this.listBox.DataSource = m_bridge.m_info;
-            //}
             if (!m_isDataDisplayedInListBox)
             {
                 if (m_bridge.m_loggedInUser != null)
@@ -101,7 +96,7 @@ namespace BasicFacebookFeatures
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            object selectedItem = listBox.SelectedItem;
         }
     }
 }

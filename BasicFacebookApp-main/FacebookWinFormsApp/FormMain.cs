@@ -27,8 +27,9 @@ namespace BasicFacebookFeatures
                 control.m_bridge = m_bridge;
             }
             m_bridge.LogInError += bridge_LogInError;
-            this.axWindowsMediaPlayer1.Visible = false;
+            axWindowsMediaPlayer1.Visible = false;
             FacebookService.s_CollectionLimit = 25;
+            UserSummaryLabel.Visible = false;
         }
 
 
@@ -45,19 +46,40 @@ namespace BasicFacebookFeatures
             User loggedInUser = m_bridge.LogIn(m_AppId);
             if (loggedInUser != null)
             {
-                updateFormOnLogin();
+                updateFormOnLogin(loggedInUser);
             }
         }
 
-        private void updateFormOnLogin()
+        private void updateFormOnLogin(User loggedInUser)
+        {
+            updateButtonsOnLogin();
+            pictureBoxProfile.ImageLocation = m_bridge.m_loggedInUser.PictureNormalURL;
+            displayInvisibleComponentsOnLogin();
+            updateUserSummaryLabel(loggedInUser);
+        }
+
+        private void updateUserSummaryLabel(User loggedInUser)
+        {
+            UserSummaryLabel.Text += $"Summary:\nThe user {loggedInUser.Name}\nwas born on {loggedInUser.Birthday}";
+            if (!string.IsNullOrEmpty(loggedInUser?.Location?.Name))
+            {
+                UserSummaryLabel.Text += $"\nand born in {loggedInUser.Location.Name}";
+            }
+        }
+
+        private void displayInvisibleComponentsOnLogin()
+        {
+            userDataGroupBox.Visible = true;
+            axWindowsMediaPlayer1.Visible = true;
+            UserSummaryLabel.Visible= true;
+        }
+
+        private void updateButtonsOnLogin()
         {
             buttonLogout.Enabled = true;
             buttonLogin.Enabled = false;
             buttonLogin.BackColor = Color.LightGreen;
             buttonLogin.Text = $"Logged in as {m_bridge.m_loggedInUser.Name}";
-            pictureBoxProfile.ImageLocation = m_bridge.m_loggedInUser.PictureNormalURL;
-            this.userDataGroupBox.Visible = true;
-            this.axWindowsMediaPlayer1.Visible = true;
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
@@ -68,17 +90,18 @@ namespace BasicFacebookFeatures
 
         private void UpdateFormOnLogout()
         {
-            this.buttonLogin.Text = "Login";
-            this.buttonLogin.BackColor = this.buttonLogout.BackColor;
-            this.buttonLogin.Enabled = true;
-            this.buttonLogout.Enabled = false;
-            this.pictureBoxProfile.ImageLocation = null;
+            buttonLogin.Text = "Login";
+            buttonLogin.BackColor = this.buttonLogout.BackColor;
+            buttonLogin.Enabled = true;
+            buttonLogout.Enabled = false;
+            pictureBoxProfile.ImageLocation = null;
             foreach (LinkSearchListControl control in userDataGroupBox.Controls.OfType<LinkSearchListControl>())
             {
                 control.hideDataFromListBox();
             }
-            this.userDataGroupBox.Visible = false;
-            this.axWindowsMediaPlayer1.Visible = false;
+            userDataGroupBox.Visible = false;
+            axWindowsMediaPlayer1.Visible = false;
+            UserSummaryLabel.Visible = false;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -165,6 +188,11 @@ namespace BasicFacebookFeatures
         }
 
         private void FacebookLogo_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click_1(object sender, EventArgs e)
         {
 
         }

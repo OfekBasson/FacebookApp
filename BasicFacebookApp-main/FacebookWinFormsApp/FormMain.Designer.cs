@@ -31,26 +31,26 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.userDataGroupBox = new System.Windows.Forms.GroupBox();
+            this.UserSummaryLabel = new System.Windows.Forms.Label();
+            this.FacebookLogo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
-            this.userDataGroupBox = new System.Windows.Forms.GroupBox();
             this.axWindowsMediaPlayer1 = new AxWMPLib.AxWindowsMediaPlayer();
-            this.FacebookLogo = new System.Windows.Forms.PictureBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pictureBoxPost = new System.Windows.Forms.PictureBox();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
-            this.InfoDataSection = new BasicFacebookFeatures.LinkSearchListControl();
             this.GalleryDataSection = new BasicFacebookFeatures.LinkSearchListControl();
             this.PostsDataSection = new BasicFacebookFeatures.LinkSearchListControl();
             this.FriendsDataSection = new BasicFacebookFeatures.LinkSearchListControl();
             this.VideosDataSection = new BasicFacebookFeatures.LinkSearchListControl();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.userDataGroupBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.FacebookLogo)).BeginInit();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
@@ -76,13 +76,49 @@
             this.tabPage1.Controls.Add(this.pictureBox1);
             this.tabPage1.Controls.Add(this.pictureBoxPost);
             this.tabPage1.Controls.Add(this.pictureBoxProfile);
-            this.tabPage1.Location = new System.Drawing.Point(4, 31);
+            this.tabPage1.Location = new System.Drawing.Point(4, 35);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(1230, 740);
+            this.tabPage1.Size = new System.Drawing.Size(1230, 736);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // userDataGroupBox
+            // 
+            this.userDataGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.userDataGroupBox.Controls.Add(this.UserSummaryLabel);
+            this.userDataGroupBox.Controls.Add(this.GalleryDataSection);
+            this.userDataGroupBox.Controls.Add(this.PostsDataSection);
+            this.userDataGroupBox.Controls.Add(this.FriendsDataSection);
+            this.userDataGroupBox.Controls.Add(this.VideosDataSection);
+            this.userDataGroupBox.Location = new System.Drawing.Point(3, 174);
+            this.userDataGroupBox.Name = "userDataGroupBox";
+            this.userDataGroupBox.Size = new System.Drawing.Size(1229, 267);
+            this.userDataGroupBox.TabIndex = 78;
+            this.userDataGroupBox.TabStop = false;
+            this.userDataGroupBox.Visible = false;
+            this.userDataGroupBox.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // UserSummaryLabel
+            // 
+            this.UserSummaryLabel.AutoSize = true;
+            this.UserSummaryLabel.Location = new System.Drawing.Point(38, 27);
+            this.UserSummaryLabel.Name = "UserSummaryLabel";
+            this.UserSummaryLabel.Size = new System.Drawing.Size(0, 26);
+            this.UserSummaryLabel.TabIndex = 1;
+            this.UserSummaryLabel.Click += new System.EventHandler(this.label1_Click_1);
+            // 
+            // FacebookLogo
+            // 
+            this.FacebookLogo.Image = global::BasicFacebookFeatures.Properties.Resources.Facebook_Logo;
+            this.FacebookLogo.Location = new System.Drawing.Point(435, 1);
+            this.FacebookLogo.Name = "FacebookLogo";
+            this.FacebookLogo.Size = new System.Drawing.Size(355, 176);
+            this.FacebookLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.FacebookLogo.TabIndex = 80;
+            this.FacebookLogo.TabStop = false;
+            this.FacebookLogo.Click += new System.EventHandler(this.FacebookLogo_Click);
             // 
             // panel1
             // 
@@ -118,22 +154,6 @@
             this.buttonLogout.UseVisualStyleBackColor = true;
             this.buttonLogout.Click += new System.EventHandler(this.buttonLogout_Click);
             // 
-            // userDataGroupBox
-            // 
-            this.userDataGroupBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.userDataGroupBox.Controls.Add(this.InfoDataSection);
-            this.userDataGroupBox.Controls.Add(this.GalleryDataSection);
-            this.userDataGroupBox.Controls.Add(this.PostsDataSection);
-            this.userDataGroupBox.Controls.Add(this.FriendsDataSection);
-            this.userDataGroupBox.Controls.Add(this.VideosDataSection);
-            this.userDataGroupBox.Location = new System.Drawing.Point(3, 177);
-            this.userDataGroupBox.Name = "userDataGroupBox";
-            this.userDataGroupBox.Size = new System.Drawing.Size(1229, 267);
-            this.userDataGroupBox.TabIndex = 78;
-            this.userDataGroupBox.TabStop = false;
-            this.userDataGroupBox.Visible = false;
-            this.userDataGroupBox.Enter += new System.EventHandler(this.groupBox1_Enter);
-            // 
             // axWindowsMediaPlayer1
             // 
             this.axWindowsMediaPlayer1.Enabled = true;
@@ -143,17 +163,6 @@
             this.axWindowsMediaPlayer1.Size = new System.Drawing.Size(345, 254);
             this.axWindowsMediaPlayer1.TabIndex = 69;
             this.axWindowsMediaPlayer1.Enter += new System.EventHandler(this.axWindowsMediaPlayer1_Enter);
-            // 
-            // FacebookLogo
-            // 
-            this.FacebookLogo.Image = global::BasicFacebookFeatures.Properties.Resources.Facebook_Logo;
-            this.FacebookLogo.Location = new System.Drawing.Point(435, 1);
-            this.FacebookLogo.Name = "FacebookLogo";
-            this.FacebookLogo.Size = new System.Drawing.Size(355, 176);
-            this.FacebookLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.FacebookLogo.TabIndex = 80;
-            this.FacebookLogo.TabStop = false;
-            this.FacebookLogo.Click += new System.EventHandler(this.FacebookLogo_Click);
             // 
             // pictureBox1
             // 
@@ -182,20 +191,12 @@
             this.pictureBoxProfile.TabStop = false;
             this.pictureBoxProfile.Click += new System.EventHandler(this.pictureBoxProfile_Click);
             // 
-            // InfoDataSection
-            // 
-            this.InfoDataSection.Location = new System.Drawing.Point(38, 27);
-            this.InfoDataSection.m_bridge = null;
-            this.InfoDataSection.m_linkText = "Show Info";
-            this.InfoDataSection.Name = "InfoDataSection";
-            this.InfoDataSection.Size = new System.Drawing.Size(200, 209);
-            this.InfoDataSection.TabIndex = 0;
-            // 
             // GalleryDataSection
             // 
             this.GalleryDataSection.Location = new System.Drawing.Point(990, 27);
             this.GalleryDataSection.m_bridge = null;
             this.GalleryDataSection.m_linkText = "Show Gallery";
+            this.GalleryDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.GalleryDataSection.Name = "GalleryDataSection";
             this.GalleryDataSection.Size = new System.Drawing.Size(200, 209);
             this.GalleryDataSection.TabIndex = 0;
@@ -205,6 +206,7 @@
             this.PostsDataSection.Location = new System.Drawing.Point(273, 27);
             this.PostsDataSection.m_bridge = null;
             this.PostsDataSection.m_linkText = "Show Posts";
+            this.PostsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.PostsDataSection.Name = "PostsDataSection";
             this.PostsDataSection.Size = new System.Drawing.Size(200, 209);
             this.PostsDataSection.TabIndex = 0;
@@ -214,6 +216,7 @@
             this.FriendsDataSection.Location = new System.Drawing.Point(509, 27);
             this.FriendsDataSection.m_bridge = null;
             this.FriendsDataSection.m_linkText = "Show Friends";
+            this.FriendsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.FriendsDataSection.Name = "FriendsDataSection";
             this.FriendsDataSection.Size = new System.Drawing.Size(200, 209);
             this.FriendsDataSection.TabIndex = 0;
@@ -223,6 +226,7 @@
             this.VideosDataSection.Location = new System.Drawing.Point(753, 27);
             this.VideosDataSection.m_bridge = null;
             this.VideosDataSection.m_linkText = "Show Videos";
+            this.VideosDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.VideosDataSection.Name = "VideosDataSection";
             this.VideosDataSection.Size = new System.Drawing.Size(200, 209);
             this.VideosDataSection.TabIndex = 0;
@@ -230,7 +234,7 @@
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 22F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1238, 775);
             this.Controls.Add(this.tabControl1);
@@ -246,10 +250,11 @@
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
             this.userDataGroupBox.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
+            this.userDataGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FacebookLogo)).EndInit();
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.axWindowsMediaPlayer1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxPost)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).EndInit();
@@ -269,12 +274,12 @@
         private LinkSearchListControl FriendsDataSection;
         private LinkSearchListControl PostsDataSection;
         private LinkSearchListControl GalleryDataSection;
-        private LinkSearchListControl InfoDataSection;
         private System.Windows.Forms.Button buttonLogin;
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.GroupBox userDataGroupBox;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox FacebookLogo;
+        private System.Windows.Forms.Label UserSummaryLabel;
     }
 }
 

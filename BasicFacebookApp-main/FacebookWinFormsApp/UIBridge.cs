@@ -63,11 +63,6 @@ namespace BasicFacebookFeatures
         }
         private void SaveCollectionToBridge(dynamic collection, string i_CollectionType)
         {
-            // TODO: implement
-            //if (i_CollectionType == "info" && collection is FacebookObjectCollection<Post> postCollection)
-            //{
-            //    m_posts = postCollection.ToList();
-            //}
             if (i_CollectionType == "post" && collection is FacebookObjectCollection<Post> postCollection)
             {
                 m_posts = postCollection.ToList();

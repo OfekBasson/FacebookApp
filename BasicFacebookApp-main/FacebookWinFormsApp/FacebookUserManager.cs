@@ -62,12 +62,7 @@ namespace BasicFacebookFeatures
         }
         public object GetDataCollectionByType(string i_CollectionType)
         {
-            if (i_CollectionType == "info")
-            {
-                //TODO: Implement
-                return new object();
-            }
-            else if (i_CollectionType == "post")
+            if (i_CollectionType == "post")
             {
                 return this.m_LoggedInUser.Posts;
             }
