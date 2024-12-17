@@ -84,6 +84,11 @@ namespace BasicFacebookFeatures
                 throw new InvalidOperationException($"Unsupported collection type or invalid i_Name: {i_CollectionType}");
             }
         }
+
+        public void PostStatus(string status)
+        {
+            m_userManager.PostStatus(status);
+        }
     }
 }
 

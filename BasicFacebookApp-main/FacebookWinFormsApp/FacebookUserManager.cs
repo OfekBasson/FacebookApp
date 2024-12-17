@@ -91,5 +91,18 @@ namespace BasicFacebookFeatures
 
         }
 
-}
+        public void PostStatus(string status)
+        {
+            try
+            {
+                m_LoggedInUser.PostStatus(status);
+            }
+            //TODO: empty catch? 
+            catch
+            {
+
+            }
+        }
+
+    }
 }

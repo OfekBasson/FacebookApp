@@ -16,6 +16,7 @@ namespace BasicFacebookFeatures
     {
         public UIBridge m_bridge { get; set; }
         private bool m_isDataDisplayedInListBox { get; set; } = false;
+        private FormMain m_formMain;
         public string m_linkText
 
         {
@@ -96,7 +97,38 @@ namespace BasicFacebookFeatures
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            object selectedItem = listBox.SelectedItem;
+            if (!m_isDataDisplayedInListBox || m_bridge.m_loggedInUser == null)
+            {
+                return;
+            }
+            genericListBox_SelectedIndexChanged(sender, e);
+        }
+
+        private void genericListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (sender is ListBox listBox && listBox.SelectedItem != null)
+            {
+                var selectedItem = listBox.SelectedItem;
+                var pictureUrlProperty = selectedItem.GetType() == typeof(FacebookWrapper.ObjectModel.Photo) ?
+                        selectedItem.GetType().GetProperty("PictureAlbumURL") :
+                        selectedItem.GetType().GetProperty("PictureURL");
+
+                if (pictureUrlProperty != null)
+                {
+                    string pictureUrl = pictureUrlProperty.GetValue(selectedItem) as string;
+                    if (!string.IsNullOrEmpty(pictureUrl))
+                    {
+                        if (m_formMain == null)
+                        {
+                            m_formMain = Application.OpenForms["FormMain"] as FormMain;
+                        }
+
+                        PictureBox pictureBox = m_formMain.PictureBoxLeft;
+                        pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+                        pictureBox.ImageLocation = pictureUrl;
+                    }
+                }
+            }
         }
     }
 }

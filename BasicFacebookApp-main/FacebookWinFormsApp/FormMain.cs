@@ -22,14 +22,14 @@ namespace BasicFacebookFeatures
         {
             InitializeComponent();
             m_bridge = new UIBridge();
+            this.Name = "FormMain"; // Explicitly set the form's name for linksearchcontrol
             foreach (LinkSearchListControl control in userDataGroupBox.Controls.OfType<LinkSearchListControl>())
             {
                 control.m_bridge = m_bridge;
             }
             m_bridge.LogInError += bridge_LogInError;
-            axWindowsMediaPlayer1.Visible = false;
+            showOrHideControlers(false);
             FacebookService.s_CollectionLimit = 25;
-            UserSummaryLabel.Visible = false;
         }
 
 
@@ -54,7 +54,8 @@ namespace BasicFacebookFeatures
         {
             updateButtonsOnLogin();
             pictureBoxProfile.ImageLocation = m_bridge.m_loggedInUser.PictureNormalURL;
-            displayInvisibleComponentsOnLogin();
+            //displayInvisibleComponentsOnLogin();
+            showOrHideControlers(true);
             updateUserSummaryLabel(loggedInUser);
         }
 
@@ -66,13 +67,21 @@ namespace BasicFacebookFeatures
                 UserSummaryLabel.Text += $"\nand born in {loggedInUser.Location.Name}";
             }
         }
-
-        private void displayInvisibleComponentsOnLogin()
+        private void showOrHideControlers(bool i_isShown)
         {
-            userDataGroupBox.Visible = true;
-            axWindowsMediaPlayer1.Visible = true;
-            UserSummaryLabel.Visible= true;
+            this.richTextBoxPosts.Visible = i_isShown;
+            this.buttonPost.Visible = i_isShown;
+            this.userDataGroupBox.Visible = i_isShown;
+            this.axWindowsMediaPlayer1.Visible = i_isShown;
+            this.pictureBoxLeft.Visible = i_isShown;
+            UserSummaryLabel.Visible = i_isShown;
         }
+        //private void displayInvisibleComponentsOnLogin()
+        //{
+        //    userDataGroupBox.Visible = true;
+        //    axWindowsMediaPlayer1.Visible = true;
+        //    UserSummaryLabel.Visible= true;
+        //}
 
         private void updateButtonsOnLogin()
         {
@@ -99,9 +108,7 @@ namespace BasicFacebookFeatures
             {
                 control.hideDataFromListBox();
             }
-            userDataGroupBox.Visible = false;
-            axWindowsMediaPlayer1.Visible = false;
-            UserSummaryLabel.Visible = false;
+            showOrHideControlers(false);
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -123,6 +130,14 @@ namespace BasicFacebookFeatures
         //        pictureBoxPost.ImageLocation = selectedPost.PictureURL;
         //    }
         //}
+
+        public PictureBox PictureBoxLeft
+        {
+            get
+            {
+                return this.pictureBoxLeft;
+            }
+        }
 
         private void tabPage1_Click(object sender, EventArgs e)
         {
@@ -196,5 +211,27 @@ namespace BasicFacebookFeatures
         {
 
         }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonPost_Click(object sender, EventArgs e)
+        {
+            PostStatus();
+        }
+        private void PostStatus()
+        {
+            MessageBox.Show("Status: " + this.richTextBoxPosts.Text);
+            m_bridge.PostStatus(this.richTextBoxPosts.Text);
+            this.richTextBoxPosts.Text = "Write Here...";
+        }
+
+        private void pictureBoxLeft_Click(object sender, EventArgs e)
+        {
+
+        }
+
     }
 }
