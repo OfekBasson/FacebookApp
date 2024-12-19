@@ -43,6 +43,7 @@ namespace BasicFacebookFeatures
                 if (m_bridge.m_loggedInUser != null)
                 {
                     InsertDataToListBox(this.Name);
+                    InsertDataToComboBoxFilter(this.Name);
                     handleDataInsertionToListBox();
                 }
                 else
@@ -83,7 +84,7 @@ namespace BasicFacebookFeatures
             }
             if (i_ControlName == "FriendsDataSection")
             {
-                this.listBox.DataSource = m_bridge.m_friends;
+                this.listBox.DataSource = m_bridge.m_friends;            
             }
             if (i_ControlName == "VideosDataSection")
             {
@@ -92,6 +93,35 @@ namespace BasicFacebookFeatures
             if (i_ControlName == "GalleryDataSection")
             {
                 this.listBox.DataSource = m_bridge.m_photos;
+            }
+        }
+
+        private void InsertDataToComboBoxFilter(string i_ControlName)
+        {
+            if (i_ControlName == "PostsDataSection")
+            {
+                this.comboBoxFilter.Items.Add("Name");
+                this.comboBoxFilter.Items.Add("Created Time");
+                this.comboBoxFilter.Items.Add("Place");
+                this.comboBoxFilter.Items.Add("Description");
+            }
+            if (i_ControlName == "FriendsDataSection")
+            {
+                this.comboBoxFilter.Items.Add("Name");
+                this.comboBoxFilter.Items.Add("Location");
+                this.comboBoxFilter.Items.Add("Email");
+            }
+            if (i_ControlName == "VideosDataSection")
+            {
+                this.comboBoxFilter.Items.Add("Name"); 
+                this.comboBoxFilter.Items.Add("Created Time");
+                this.comboBoxFilter.Items.Add("Location");
+            }
+            if (i_ControlName == "GalleryDataSection")
+            {
+                this.comboBoxFilter.Items.Add("To String");
+                this.comboBoxFilter.Items.Add("Location");
+                this.comboBoxFilter.Items.Add("Description");
             }
         }
 
@@ -130,5 +160,92 @@ namespace BasicFacebookFeatures
                 }
             }
         }
+        //why its still box1 and not filter? 
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //MessageBox.Show("here");
+            //TODO: sometimes the list is full of empty string due to location="" or something.. 
+            // Filter out items with an empty or null property for DisplayMember
+            string selectedMember = this.comboBoxFilter.SelectedItem.ToString().Replace(" ", "");
+            string controlName = this.Name;
+            this.listBox.DataSource = null;
+            if (controlName == "PostsDataSection")
+            {
+                if(selectedMember == "CreatedTime")
+                {
+                    this.listBox.DisplayMember = selectedMember;
+                }
+                this.listBox.DataSource = FilterItems.FilterByMember(m_bridge.m_posts, selectedMember);
+               
+            }
+            if (controlName == "FriendsDataSection")
+            {
+                this.listBox.DataSource = FilterItems.FilterByMember(m_bridge.m_friends, selectedMember);
+            }
+            if (controlName == "VideosDataSection")
+            {
+                this.listBox.DataSource = FilterItems.FilterByMember(m_bridge.m_videos, selectedMember);
+            }
+            if (controlName == "GalleryDataSection")
+            {
+                if(selectedMember == "ToString")
+                {
+                    this.listBox.DisplayMember = "ToString";
+                }
+                this.listBox.DataSource = FilterItems.FilterByMember(m_bridge.m_photos, selectedMember);
+            }
+        }
+
+        
+
+
+        private void textBoxFilter_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void buttonFilter_Click(object sender, EventArgs e)
+        {
+            if(this.comboBoxFilter.SelectedItem != null && !string.IsNullOrEmpty(this.textBoxFilter.Text))
+            {
+                String propertyName = this.comboBoxFilter.SelectedItem.ToString().Replace(" ", "");
+                string linkSearchName = this.Name;
+                try
+                {
+                    if (linkSearchName == "PostsDataSection")
+                    {
+                        if (propertyName == "Desecription")
+                        {
+                            propertyName = "ToString";
+                        }
+                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_posts, propertyName, textBoxFilter.Text);
+                    }
+                    if (linkSearchName == "FriendsDataSection")
+                    {
+                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_friends, propertyName, textBoxFilter.Text);
+                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_friends, propertyName, textBoxFilter.Text);
+                    }
+                    if (linkSearchName == "VideosDataSection")
+                    {
+                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_videos, propertyName, textBoxFilter.Text);
+                    }
+                    if (linkSearchName == "GalleryDataSection")
+                    {
+                        if (propertyName == "Description")
+                        {
+                            propertyName = "Name";
+                        }
+                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_photos, propertyName, textBoxFilter.Text);
+                    }
+                }
+                catch (Exception ex) 
+                {
+                    MessageBox.Show(ex.Message);
+                }
+            }
+        }
+
+        
+        
     }
 }

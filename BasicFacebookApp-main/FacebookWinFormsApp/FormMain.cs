@@ -28,8 +28,11 @@ namespace BasicFacebookFeatures
                 control.m_bridge = m_bridge;
             }
             m_bridge.LogInError += bridge_LogInError;
+            loadDrafts();
             showOrHideControlers(false);
+            this.richTextBoxPosts.Text = "Write Here...";
             FacebookService.s_CollectionLimit = 25;
+            //Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
         }
 
 
@@ -54,14 +57,13 @@ namespace BasicFacebookFeatures
         {
             updateButtonsOnLogin();
             pictureBoxProfile.ImageLocation = m_bridge.m_loggedInUser.PictureNormalURL;
-            //displayInvisibleComponentsOnLogin();
             showOrHideControlers(true);
             updateUserSummaryLabel(loggedInUser);
         }
 
         private void updateUserSummaryLabel(User loggedInUser)
         {
-            UserSummaryLabel.Text += $"Summary:\nThe user {loggedInUser.Name}\nwas born on {loggedInUser.Birthday}";
+            UserSummaryLabel.Text = $"Summary:\nThe user {loggedInUser.Name}\nwas born on {loggedInUser.Birthday}";
             if (!string.IsNullOrEmpty(loggedInUser?.Location?.Name))
             {
                 UserSummaryLabel.Text += $"\nand born in {loggedInUser.Location.Name}";
@@ -75,13 +77,11 @@ namespace BasicFacebookFeatures
             this.axWindowsMediaPlayer1.Visible = i_isShown;
             this.pictureBoxLeft.Visible = i_isShown;
             UserSummaryLabel.Visible = i_isShown;
+            this.buttonClearDrafts.Visible = i_isShown;
+            this.buttonSaveDraft.Visible = i_isShown;
+            this.listBoxDrafts.Visible = i_isShown;
+
         }
-        //private void displayInvisibleComponentsOnLogin()
-        //{
-        //    userDataGroupBox.Visible = true;
-        //    axWindowsMediaPlayer1.Visible = true;
-        //    UserSummaryLabel.Visible= true;
-        //}
 
         private void updateButtonsOnLogin()
         {
@@ -109,6 +109,7 @@ namespace BasicFacebookFeatures
                 control.hideDataFromListBox();
             }
             showOrHideControlers(false);
+            m_bridge.saveDraftsToFile();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -120,16 +121,6 @@ namespace BasicFacebookFeatures
         {
 
         }
-
-        // TODO: implement
-        //private void listBoxPosts_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    Post selectedPost = listBoxPosts.SelectedItem as Post;
-        //    if (selectedPost != null && selectedPost.PictureURL != null)
-        //    {
-        //        pictureBoxPost.ImageLocation = selectedPost.PictureURL;
-        //    }
-        //}
 
         public PictureBox PictureBoxLeft
         {
@@ -148,15 +139,6 @@ namespace BasicFacebookFeatures
         {
 
         }
-        // TODO: implement
-        //private void listBoxGallery_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    Photo selectedPhoto = listBoxGallery.SelectedItem as Photo;
-        //    if (selectedPhoto != null && selectedPhoto.PictureAlbumURL != null)
-        //        pictureBox1.ImageLocation = selectedPhoto.PictureAlbumURL;
-        //}
-
- 
 
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -233,5 +215,53 @@ namespace BasicFacebookFeatures
 
         }
 
+        private void FriendsDataSection_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void GalleryDataSection_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void buttonSaveDraft_Click(object sender, EventArgs e)
+        {
+            saveDraft();
+        }
+
+        private void saveDraft()
+        {
+            Console.WriteLine("on posts: " + this.richTextBoxPosts.Text);
+            List<PostDraft> postsDraft = m_bridge.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
+            refreshListBoxDrafts(postsDraft);
+        }
+
+        private void refreshListBoxDrafts(List<PostDraft> postsDraft)
+        {
+            // Reset the DataSource to refresh the ListBox
+            this.listBoxDrafts.DataSource = null;
+            this.listBoxDrafts.DataSource = postsDraft;
+            this.listBoxDrafts.DisplayMember = "m_Title";
+        }
+
+        private void loadDrafts()
+        {
+            this.listBoxDrafts.DataSource = m_bridge.LoadDrafts();
+        }
+
+        private void listBoxDrafts_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int index = listBoxDrafts.SelectedIndex;
+            if (index == -1) return;
+            List<PostDraft> drafts = m_bridge.GetDrafts();
+            Console.WriteLine("content: " + drafts[index].m_Content);
+            this.richTextBoxPosts.Text = drafts[index].m_Content;
+        }
+
+        private void buttonClearDrafts_Click(object sender, EventArgs e)
+        {
+            refreshListBoxDrafts(m_bridge.ClearDrafts());
+        }
     }
 }

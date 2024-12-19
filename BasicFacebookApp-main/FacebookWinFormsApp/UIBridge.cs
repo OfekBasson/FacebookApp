@@ -11,6 +11,7 @@ namespace BasicFacebookFeatures
     public class UIBridge
     {
         private FacebooktUserManager m_userManager;
+        private DraftSManager m_draftManager;
         public User m_loggedInUser { get; set; }
         public List<Post> m_posts { get; set; }
         public List<Video> m_videos { get; set; }
@@ -21,6 +22,7 @@ namespace BasicFacebookFeatures
         public UIBridge()
         {
             m_userManager = new FacebooktUserManager();
+            m_draftManager = new DraftSManager();
         }
 
         public User LogIn(string i_AppId)
@@ -33,7 +35,7 @@ namespace BasicFacebookFeatures
             {
                 OnLogInError();
             }
-            
+
             if (m_loggedInUser != null)
             {
                 SaveFacebookCollectionAsListToBridge("post");
@@ -89,6 +91,37 @@ namespace BasicFacebookFeatures
         {
             m_userManager.PostStatus(status);
         }
+
+        public List<PostDraft> AddDraft(string i_title, string i_content)
+        {
+            PostDraft post = new PostDraft();
+            post.m_Title = i_title; 
+            post.m_Content = i_content;
+            m_draftManager.m_Drafts.Add(post);
+            return m_draftManager.m_Drafts;
+        }
+
+        public void saveDraftsToFile()
+        {
+            m_draftManager.SaveDrafts();
+        }
+
+        public List<PostDraft> LoadDrafts()
+        {
+            return m_draftManager.LoadDrafts();
+        }
+
+        public List<PostDraft> GetDrafts()
+        {
+            return m_draftManager.m_Drafts;
+        }
+
+        public List<PostDraft> ClearDrafts()
+        {
+            m_draftManager.ClearDrafts();
+            return m_draftManager.m_Drafts;
+        }
+
     }
 }
 

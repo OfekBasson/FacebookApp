@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FacebookWrapper;
 using FacebookWrapper.ObjectModel;
+using System.IO;
 
 namespace BasicFacebookFeatures
 {
@@ -41,11 +42,14 @@ namespace BasicFacebookFeatures
                 "user_gender",
                 "user_videos"
                 );
-
+            //ONLY FOR DEBUG
+            //LoginResult m_LoginResult = FacebookService.Connect("your_token");
+            //Console.WriteLine("token:" + m_AccessToken);
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
             {
                 m_LoggedInUser = m_LoginResult.LoggedInUser;
                 m_AccessToken = m_LoginResult.AccessToken;
+                
                 return;
             }
             throw new LoginException("Logging in wasn't successful");
@@ -96,6 +100,7 @@ namespace BasicFacebookFeatures
             try
             {
                 m_LoggedInUser.PostStatus(status);
+                
             }
             //TODO: empty catch? 
             catch
