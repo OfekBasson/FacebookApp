@@ -11,12 +11,9 @@ using System.IO;
 
 namespace BasicFacebookFeatures
 {
-    //TODO: Should we implement something like connect using "m_LoginResult = FacebookService.Connect(AccessToken);"
     internal class FacebooktUserManager
     {
         private User m_LoggedInUser { get; set; }
-        // TODO: Should we save it? Is it necessary somewhere?
-        private string m_AccessToken { get; set; }
         public User EnsureLoggedIn(string i_AppId)
         {
             if (!IsLoggedIn())
@@ -42,17 +39,16 @@ namespace BasicFacebookFeatures
                 "user_gender",
                 "user_videos"
                 );
-            //ONLY FOR DEBUG
-            //LoginResult m_LoginResult = FacebookService.Connect("your_token");
-            //Console.WriteLine("token:" + m_AccessToken);
             if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
             {
                 m_LoggedInUser = m_LoginResult.LoggedInUser;
-                m_AccessToken = m_LoginResult.AccessToken;
-                
+                if (m_LoggedInUser == null)
+                {
+                    throw new LoginException("Logging in wasn't successful - Facebook server response to login was unsuccessful");
+                }
                 return;
             }
-            throw new LoginException("Logging in wasn't successful");
+            throw new LoginException("Logging in wasn't successful - unknown problem");
         }
         public void Logout()
         {
@@ -89,25 +85,14 @@ namespace BasicFacebookFeatures
                 return photoCollection;
             }
             else {
-                //TODO: Implement maybe null isn't good...
-                return null;
+                throw new DataCollectionInformationException($"Collection type {i_CollectionType} isn't recognized.");
             }
 
         }
 
         public void PostStatus(string status)
         {
-            try
-            {
-                m_LoggedInUser.PostStatus(status);
-                
-            }
-            //TODO: empty catch? 
-            catch
-            {
-
-            }
+           m_LoggedInUser.PostStatus(status);            
         }
-
     }
 }

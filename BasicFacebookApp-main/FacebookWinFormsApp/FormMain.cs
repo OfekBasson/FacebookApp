@@ -12,12 +12,18 @@ using System.Runtime.Remoting.Messaging;
 
 namespace BasicFacebookFeatures
 {
-    // TODO: Why is the access token text needed?
     internal partial class FormMain : Form
     {
         private string m_AppId = "917683610037169";
         private UIBridge m_bridge { get; set; }
-        
+        public PictureBox PictureBoxLeft
+        {
+            get
+            {
+                return this.pictureBoxLeft;
+            }
+        }
+
         public FormMain()
         {
             InitializeComponent();
@@ -27,7 +33,7 @@ namespace BasicFacebookFeatures
             {
                 control.m_bridge = m_bridge;
             }
-            m_bridge.LogInError += bridge_LogInError;
+            m_bridge.ErrorOccured += bridge_ErrorOccured;
             loadDrafts();
             showOrHideControlers(false);
             this.richTextBoxPosts.Text = "Write Here...";
@@ -36,9 +42,9 @@ namespace BasicFacebookFeatures
         }
 
 
-        private void bridge_LogInError()
+        private void bridge_ErrorOccured(string errorMessage)
         {
-            MessageBox.Show("Login Error, please try again");
+            MessageBox.Show($"Error occured, please try again or call support 052538164, and add also 8.\nError message: {errorMessage}");
         }
 
 
@@ -99,10 +105,7 @@ namespace BasicFacebookFeatures
 
         private void UpdateFormOnLogout()
         {
-            buttonLogin.Text = "Login";
-            buttonLogin.BackColor = this.buttonLogout.BackColor;
-            buttonLogin.Enabled = true;
-            buttonLogout.Enabled = false;
+            updateButtonsOnLogout();
             pictureBoxProfile.ImageLocation = null;
             foreach (LinkSearchListControl control in userDataGroupBox.Controls.OfType<LinkSearchListControl>())
             {
@@ -110,6 +113,14 @@ namespace BasicFacebookFeatures
             }
             showOrHideControlers(false);
             m_bridge.saveDraftsToFile();
+        }
+
+        private void updateButtonsOnLogout()
+        {
+            buttonLogin.Text = "Login";
+            buttonLogin.BackColor = this.buttonLogout.BackColor;
+            buttonLogin.Enabled = true;
+            buttonLogout.Enabled = false;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -120,14 +131,6 @@ namespace BasicFacebookFeatures
         private void textBoxAppID_TextChanged(object sender, EventArgs e)
         {
 
-        }
-
-        public PictureBox PictureBoxLeft
-        {
-            get
-            {
-                return this.pictureBoxLeft;
-            }
         }
 
         private void tabPage1_Click(object sender, EventArgs e)

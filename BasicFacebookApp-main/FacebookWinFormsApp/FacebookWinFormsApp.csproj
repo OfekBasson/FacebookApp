@@ -79,7 +79,8 @@
   <ItemGroup>
     <Compile Include="DraftSManager.cs" />
     <Compile Include="FilterItems.cs" />
-    <Compile Include="LoginException .cs" />
+    <Compile Include="FacebookAppExceptions\DataCollectionInformationException.cs" />
+    <Compile Include="FacebookAppExceptions\LoginException .cs" />
     <Compile Include="PostDraft.cs" />
     <Compile Include="UIBridge.cs" />
     <Compile Include="FacebookUserManager.cs" />
@@ -153,5 +154,6 @@
   <ItemGroup>
     <None Include="Facebook-Logo.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

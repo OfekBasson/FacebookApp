@@ -24,8 +24,6 @@ namespace BasicFacebookFeatures
             set { this.link.Text = value; }
         }
         
-        // TODO: Listen to this event and update the image/video/etc...
-        public event Action IndexChanged;
         public LinkSearchListControl()
         {
             InitializeComponent();
@@ -42,7 +40,7 @@ namespace BasicFacebookFeatures
             {
                 if (m_bridge.m_loggedInUser != null)
                 {
-                    InsertDataToListBox(this.Name);
+                    insertDataToListBox(this.Name);
                     InsertDataToComboBoxFilter(this.Name);
                     handleDataInsertionToListBox();
                 }
@@ -76,7 +74,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void InsertDataToListBox(string i_ControlName)
+        private void insertDataToListBox(string i_ControlName)
         {
             if (i_ControlName == "PostsDataSection")
             {

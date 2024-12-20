@@ -18,8 +18,7 @@ namespace BasicFacebookFeatures
         public DraftSManager()
         {
             m_Drafts = new List<PostDraft>();
-            m_DirectoryPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FacebookApp");
+            m_DirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FacebookApp");
             m_FilePath = Path.Combine(m_DirectoryPath, "draftPosts.xml");
             if (!Directory.Exists(m_DirectoryPath))
             {
@@ -53,19 +52,11 @@ namespace BasicFacebookFeatures
         public void ClearDrafts()
         {
             m_Drafts.Clear();
-            try
+            // Check if the file exists before delete
+            if (File.Exists(m_FilePath))
             {
-                // Check if the file exists before delete
-                if (File.Exists(m_FilePath))
-                {
-                    File.Delete(m_FilePath);
-                }
-            }
-            catch (Exception ex)
-            {
-                
+                File.Delete(m_FilePath);
             }
         }
-
     }
 }

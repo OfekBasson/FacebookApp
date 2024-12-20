@@ -17,7 +17,8 @@ namespace BasicFacebookFeatures
         public List<Video> m_videos { get; set; }
         public List<User> m_friends { get; set; }
         public List<Photo> m_photos { get; set; }
-        public event Action LogInError;
+        public List<PostDraft> m_drafts { get; set; }
+        public event Action<string> ErrorOccured;
 
         public UIBridge()
         {
@@ -30,40 +31,45 @@ namespace BasicFacebookFeatures
             try
             {
                 m_loggedInUser = m_userManager.EnsureLoggedIn(i_AppId);
+                saveAllFacebookCollectionsAsListsToBridge();
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                OnLogInError();
+                OnErrorOccured(ex.Message);
             }
-
-            if (m_loggedInUser != null)
-            {
-                SaveFacebookCollectionAsListToBridge("post");
-                SaveFacebookCollectionAsListToBridge("video");
-                SaveFacebookCollectionAsListToBridge("friend");
-                SaveFacebookCollectionAsListToBridge("photo");
-                return m_loggedInUser;
-            }
-            else
-            {
-                return null;
-            }
+            return m_loggedInUser;
         }
-        protected virtual void OnLogInError()
+
+        private void saveAllFacebookCollectionsAsListsToBridge()
         {
-            LogInError?.Invoke();
+            saveFacebookCollectionAsListToBridge("post");
+            saveFacebookCollectionAsListToBridge("video");
+            saveFacebookCollectionAsListToBridge("friend");
+            saveFacebookCollectionAsListToBridge("photo");
+        }
+
+        protected virtual void OnErrorOccured(string errorMessage)
+        {
+            ErrorOccured?.Invoke(errorMessage);
         }
         public void Logout()
         {
-            m_userManager.Logout();
+            try
+            {
+                m_userManager.Logout();
+            }
+            catch (Exception ex)
+            {
+                OnErrorOccured(ex.Message);
+            }
         }
 
-        public void SaveFacebookCollectionAsListToBridge(string i_CollectionType)
+        private void saveFacebookCollectionAsListToBridge(string i_CollectionType)
         {
             object collection = m_userManager.GetDataCollectionByType(i_CollectionType);
-            SaveCollectionToBridge((dynamic)collection, i_CollectionType);
+            saveCollectionToBridge((dynamic)collection, i_CollectionType);
         }
-        private void SaveCollectionToBridge(dynamic collection, string i_CollectionType)
+        private void saveCollectionToBridge(dynamic collection, string i_CollectionType)
         {
             if (i_CollectionType == "post" && collection is FacebookObjectCollection<Post> postCollection)
             {
@@ -89,26 +95,55 @@ namespace BasicFacebookFeatures
 
         public void PostStatus(string status)
         {
-            m_userManager.PostStatus(status);
+            try
+            {
+                m_userManager.PostStatus(status);
+            }
+            catch (Exception ex)
+            {
+                OnErrorOccured(ex.Message);
+            }
         }
 
         public List<PostDraft> AddDraft(string i_title, string i_content)
         {
-            PostDraft post = new PostDraft();
-            post.m_Title = i_title; 
-            post.m_Content = i_content;
-            m_draftManager.m_Drafts.Add(post);
+            try
+            {
+                PostDraft post = new PostDraft();
+                post.m_Title = i_title;
+                post.m_Content = i_content;
+                m_draftManager.m_Drafts.Add(post);
+            }
+            catch (Exception ex)
+            { 
+                OnErrorOccured(ex.Message);
+            }
             return m_draftManager.m_Drafts;
         }
 
         public void saveDraftsToFile()
         {
-            m_draftManager.SaveDrafts();
+            try
+            {
+                m_draftManager.SaveDrafts();
+            }
+            catch (Exception ex)
+            {
+                OnErrorOccured(ex.Message);
+            }
         }
 
         public List<PostDraft> LoadDrafts()
         {
-            return m_draftManager.LoadDrafts();
+            try
+            {
+                m_drafts = m_draftManager.LoadDrafts();
+            }
+            catch (Exception ex)
+            {
+                OnErrorOccured(ex.Message);
+            }
+            return m_drafts;
         }
 
         public List<PostDraft> GetDrafts()
@@ -118,7 +153,14 @@ namespace BasicFacebookFeatures
 
         public List<PostDraft> ClearDrafts()
         {
-            m_draftManager.ClearDrafts();
+            try
+            {
+                m_draftManager.ClearDrafts();
+            }
+            catch (Exception ex)
+            {
+                OnErrorOccured(ex.Message);
+            }
             return m_draftManager.m_Drafts;
         }
 
