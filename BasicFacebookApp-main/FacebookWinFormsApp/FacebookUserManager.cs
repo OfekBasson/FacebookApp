@@ -26,7 +26,7 @@ namespace BasicFacebookFeatures
         }
         private void login(string i_AppID)
         {
-            LoginResult m_LoginResult = FacebookService.Login(
+            LoginResult loginResult = FacebookService.Login(
                 i_AppID,
                 "email",
                 "public_profile",
@@ -39,9 +39,9 @@ namespace BasicFacebookFeatures
                 "user_gender",
                 "user_videos"
                 );
-            if (string.IsNullOrEmpty(m_LoginResult.ErrorMessage))
+            if (string.IsNullOrEmpty(loginResult.ErrorMessage))
             {
-                m_LoggedInUser = m_LoginResult.LoggedInUser;
+                m_LoggedInUser = loginResult.LoggedInUser;
                 if (m_LoggedInUser == null)
                 {
                     throw new LoginException("Logging in wasn't successful - Facebook server response to login was unsuccessful");
@@ -90,9 +90,9 @@ namespace BasicFacebookFeatures
 
         }
 
-        public void PostStatus(string status)
+        public void PostStatus(string i_Status)
         {
-           m_LoggedInUser.PostStatus(status);            
+           m_LoggedInUser.PostStatus(i_Status);            
         }
     }
 }

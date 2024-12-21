@@ -15,8 +15,8 @@ namespace BasicFacebookFeatures
     internal partial class FormMain : Form
     {
         private string m_AppId = "917683610037169";
-        private UIBridge m_bridge { get; set; }
-        public PictureBox PictureBoxLeft
+        private UIBridge m_Bridge { get; set; }
+        public PictureBox m_PictureBoxLeft
         {
             get
             {
@@ -27,13 +27,13 @@ namespace BasicFacebookFeatures
         public FormMain()
         {
             InitializeComponent();
-            m_bridge = new UIBridge();
+            m_Bridge = new UIBridge();
             this.Name = "FormMain"; // Explicitly set the form's name for linksearchcontrol
             foreach (LinkSearchListControl control in userDataGroupBox.Controls.OfType<LinkSearchListControl>())
             {
-                control.m_bridge = m_bridge;
+                control.m_Bridge = m_Bridge;
             }
-            m_bridge.ErrorOccured += bridge_ErrorOccured;
+            m_Bridge.ErrorOccured += bridge_ErrorOccured;
             loadDrafts();
             showOrHideControlers(false);
             this.richTextBoxPosts.Text = "Write Here...";
@@ -42,9 +42,9 @@ namespace BasicFacebookFeatures
         }
 
 
-        private void bridge_ErrorOccured(string errorMessage)
+        private void bridge_ErrorOccured(string i_ErrorMessage)
         {
-            MessageBox.Show($"Error occured, please try again or call support 052538164, and add also 8.\nError message: {errorMessage}");
+            MessageBox.Show($"Error occured, please try again or call support 052538164, and add also 8.\nError message: {i_ErrorMessage}");
         }
 
 
@@ -52,40 +52,40 @@ namespace BasicFacebookFeatures
         {
             Clipboard.SetText("ofekofekfacebook@gmail.com");
             //Clipboard.SetText("design.patterns");
-            User loggedInUser = m_bridge.LogIn(m_AppId);
+            User loggedInUser = m_Bridge.LogIn(m_AppId);
             if (loggedInUser != null)
             {
                 updateFormOnLogin(loggedInUser);
             }
         }
 
-        private void updateFormOnLogin(User loggedInUser)
+        private void updateFormOnLogin(User i_LoggedInUser)
         {
             updateButtonsOnLogin();
-            pictureBoxProfile.ImageLocation = m_bridge.m_loggedInUser.PictureNormalURL;
+            pictureBoxProfile.ImageLocation = m_Bridge.m_LoggedInUser.PictureNormalURL;
             showOrHideControlers(true);
-            updateUserSummaryLabel(loggedInUser);
+            updateUserSummaryLabel(i_LoggedInUser);
         }
 
-        private void updateUserSummaryLabel(User loggedInUser)
+        private void updateUserSummaryLabel(User i_LoggedInUser)
         {
-            UserSummaryLabel.Text = $"Summary:\nThe user {loggedInUser.Name}\nwas born on {loggedInUser.Birthday}";
-            if (!string.IsNullOrEmpty(loggedInUser?.Location?.Name))
+            UserSummaryLabel.Text = $"Summary:\nThe user {i_LoggedInUser.Name}\nwas born on {i_LoggedInUser.Birthday}";
+            if (!string.IsNullOrEmpty(i_LoggedInUser?.Location?.Name))
             {
-                UserSummaryLabel.Text += $"\nand born in {loggedInUser.Location.Name}";
+                UserSummaryLabel.Text += $"\nand born in {i_LoggedInUser.Location.Name}";
             }
         }
-        private void showOrHideControlers(bool i_isShown)
+        private void showOrHideControlers(bool i_IsShown)
         {
-            this.richTextBoxPosts.Visible = i_isShown;
-            this.buttonPost.Visible = i_isShown;
-            this.userDataGroupBox.Visible = i_isShown;
-            this.axWindowsMediaPlayer1.Visible = i_isShown;
-            this.pictureBoxLeft.Visible = i_isShown;
-            UserSummaryLabel.Visible = i_isShown;
-            this.buttonClearDrafts.Visible = i_isShown;
-            this.buttonSaveDraft.Visible = i_isShown;
-            this.listBoxDrafts.Visible = i_isShown;
+            this.richTextBoxPosts.Visible = i_IsShown;
+            this.buttonPost.Visible = i_IsShown;
+            this.userDataGroupBox.Visible = i_IsShown;
+            this.axWindowsMediaPlayer1.Visible = i_IsShown;
+            this.pictureBoxLeft.Visible = i_IsShown;
+            UserSummaryLabel.Visible = i_IsShown;
+            this.buttonClearDrafts.Visible = i_IsShown;
+            this.buttonSaveDraft.Visible = i_IsShown;
+            this.listBoxDrafts.Visible = i_IsShown;
 
         }
 
@@ -94,12 +94,12 @@ namespace BasicFacebookFeatures
             buttonLogout.Enabled = true;
             buttonLogin.Enabled = false;
             buttonLogin.BackColor = Color.LightGreen;
-            buttonLogin.Text = $"Logged in as {m_bridge.m_loggedInUser.Name}";
+            buttonLogin.Text = $"Logged in as {m_Bridge.m_LoggedInUser.Name}";
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            m_bridge.Logout();
+            m_Bridge.Logout();
             UpdateFormOnLogout();
         }
 
@@ -109,10 +109,10 @@ namespace BasicFacebookFeatures
             pictureBoxProfile.ImageLocation = null;
             foreach (LinkSearchListControl control in userDataGroupBox.Controls.OfType<LinkSearchListControl>())
             {
-                control.hideDataFromListBox();
+                control.HideDataFromListBox();
             }
             showOrHideControlers(false);
-            m_bridge.saveDraftsToFile();
+            m_Bridge.SaveDraftsToFile();
         }
 
         private void updateButtonsOnLogout()
@@ -209,7 +209,7 @@ namespace BasicFacebookFeatures
         private void PostStatus()
         {
             MessageBox.Show("Status: " + this.richTextBoxPosts.Text);
-            m_bridge.PostStatus(this.richTextBoxPosts.Text);
+            m_Bridge.PostStatus(this.richTextBoxPosts.Text);
             this.richTextBoxPosts.Text = "Write Here...";
         }
 
@@ -236,35 +236,35 @@ namespace BasicFacebookFeatures
         private void saveDraft()
         {
             Console.WriteLine("on posts: " + this.richTextBoxPosts.Text);
-            List<PostDraft> postsDraft = m_bridge.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
+            List<PostDraft> postsDraft = m_Bridge.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
             refreshListBoxDrafts(postsDraft);
         }
 
-        private void refreshListBoxDrafts(List<PostDraft> postsDraft)
+        private void refreshListBoxDrafts(List<PostDraft> i_PostsDraft)
         {
             // Reset the DataSource to refresh the ListBox
             this.listBoxDrafts.DataSource = null;
-            this.listBoxDrafts.DataSource = postsDraft;
+            this.listBoxDrafts.DataSource = i_PostsDraft;
             this.listBoxDrafts.DisplayMember = "m_Title";
         }
 
         private void loadDrafts()
         {
-            this.listBoxDrafts.DataSource = m_bridge.LoadDrafts();
+            this.listBoxDrafts.DataSource = m_Bridge.LoadDrafts();
         }
 
         private void listBoxDrafts_SelectedIndexChanged(object sender, EventArgs e)
         {
             int index = listBoxDrafts.SelectedIndex;
             if (index == -1) return;
-            List<PostDraft> drafts = m_bridge.GetDrafts();
+            List<PostDraft> drafts = m_Bridge.GetDrafts();
             Console.WriteLine("content: " + drafts[index].m_Content);
             this.richTextBoxPosts.Text = drafts[index].m_Content;
         }
 
         private void buttonClearDrafts_Click(object sender, EventArgs e)
         {
-            refreshListBoxDrafts(m_bridge.ClearDrafts());
+            refreshListBoxDrafts(m_Bridge.ClearDrafts());
         }
     }
 }

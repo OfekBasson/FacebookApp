@@ -162,8 +162,8 @@
             // GalleryDataSection
             // 
             this.GalleryDataSection.Location = new System.Drawing.Point(982, 27);
-            this.GalleryDataSection.m_bridge = null;
-            this.GalleryDataSection.m_linkText = "Show Gallery";
+            this.GalleryDataSection.m_Bridge = null;
+            this.GalleryDataSection.m_LinkText = "Show Gallery";
             this.GalleryDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.GalleryDataSection.Name = "GalleryDataSection";
             this.GalleryDataSection.Size = new System.Drawing.Size(242, 209);
@@ -173,8 +173,8 @@
             // PostsDataSection
             // 
             this.PostsDataSection.Location = new System.Drawing.Point(240, 24);
-            this.PostsDataSection.m_bridge = null;
-            this.PostsDataSection.m_linkText = "Show Posts";
+            this.PostsDataSection.m_Bridge = null;
+            this.PostsDataSection.m_LinkText = "Show Posts";
             this.PostsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.PostsDataSection.Name = "PostsDataSection";
             this.PostsDataSection.Size = new System.Drawing.Size(241, 209);
@@ -183,8 +183,8 @@
             // FriendsDataSection
             // 
             this.FriendsDataSection.Location = new System.Drawing.Point(487, 24);
-            this.FriendsDataSection.m_bridge = null;
-            this.FriendsDataSection.m_linkText = "Show Friends";
+            this.FriendsDataSection.m_Bridge = null;
+            this.FriendsDataSection.m_LinkText = "Show Friends";
             this.FriendsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.FriendsDataSection.Name = "FriendsDataSection";
             this.FriendsDataSection.Size = new System.Drawing.Size(241, 209);
@@ -194,8 +194,8 @@
             // VideosDataSection
             // 
             this.VideosDataSection.Location = new System.Drawing.Point(734, 27);
-            this.VideosDataSection.m_bridge = null;
-            this.VideosDataSection.m_linkText = "Show Videos";
+            this.VideosDataSection.m_Bridge = null;
+            this.VideosDataSection.m_LinkText = "Show Videos";
             this.VideosDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.VideosDataSection.Name = "VideosDataSection";
             this.VideosDataSection.Size = new System.Drawing.Size(242, 209);

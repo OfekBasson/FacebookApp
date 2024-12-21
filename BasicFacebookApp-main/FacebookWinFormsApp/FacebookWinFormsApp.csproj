@@ -78,7 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DraftSManager.cs" />
-    <Compile Include="FilterItems.cs" />
+    <Compile Include="ItemsFilter.cs" />
     <Compile Include="FacebookAppExceptions\DataCollectionInformationException.cs" />
     <Compile Include="FacebookAppExceptions\LoginException .cs" />
     <Compile Include="PostDraft.cs" />

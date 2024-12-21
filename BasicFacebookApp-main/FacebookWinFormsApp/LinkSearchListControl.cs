@@ -14,10 +14,10 @@ namespace BasicFacebookFeatures
 {
     public partial class LinkSearchListControl : UserControl
     {
-        public UIBridge m_bridge { get; set; }
-        private bool m_isDataDisplayedInListBox { get; set; } = false;
-        private FormMain m_formMain;
-        public string m_linkText
+        public UIBridge m_Bridge { get; set; }
+        private bool m_IsDataDisplayedInListBox { get; set; } = false;
+        private FormMain m_FormMain;
+        public string m_LinkText
 
         {
             get { return this.link.Text; }
@@ -27,7 +27,7 @@ namespace BasicFacebookFeatures
         public LinkSearchListControl()
         {
             InitializeComponent();
-            m_linkText = $"Show {Name.Replace("DataSection", "")}";
+            m_LinkText = $"Show {Name.Replace("DataSection", "")}";
         }
 
         private void UserDataSection_Load(object sender, EventArgs e)
@@ -36,12 +36,12 @@ namespace BasicFacebookFeatures
 
         private void link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (!m_isDataDisplayedInListBox)
+            if (!m_IsDataDisplayedInListBox)
             {
-                if (m_bridge.m_loggedInUser != null)
+                if (m_Bridge.m_LoggedInUser != null)
                 {
                     insertDataToListBox(this.Name);
-                    InsertDataToComboBoxFilter(this.Name);
+                    insertDataToComboBoxFilter(this.Name);
                     handleDataInsertionToListBox();
                 }
                 else
@@ -51,26 +51,26 @@ namespace BasicFacebookFeatures
             }
             else
             {
-                hideDataFromListBox();
+                HideDataFromListBox();
             }
         }
-        public void hideDataFromListBox()
+        public void HideDataFromListBox()
         {
             this.listBox.DataSource = null;
-            m_isDataDisplayedInListBox = false;
-            this.m_linkText = $"Show {this.Name.Replace("DataSection", "")}";
+            m_IsDataDisplayedInListBox = false;
+            this.m_LinkText = $"Show {this.Name.Replace("DataSection", "")}";
         }
 
         private void handleDataInsertionToListBox()
         {
             if (this.listBox.Items.Count != 0)
             {
-                this.m_linkText = $"Hide {this.Name.Replace("DataSection", "")}";
-                m_isDataDisplayedInListBox = true;
+                this.m_LinkText = $"Hide {this.Name.Replace("DataSection", "")}";
+                m_IsDataDisplayedInListBox = true;
             }
             else
             {
-                MessageBox.Show($"No items to show for the command '{this.m_linkText}'");
+                MessageBox.Show($"No items to show for the command '{this.m_LinkText}'");
             }
         }
 
@@ -78,23 +78,23 @@ namespace BasicFacebookFeatures
         {
             if (i_ControlName == "PostsDataSection")
             {
-                this.listBox.DataSource = m_bridge.m_posts;
+                this.listBox.DataSource = m_Bridge.m_Posts;
             }
             if (i_ControlName == "FriendsDataSection")
             {
-                this.listBox.DataSource = m_bridge.m_friends;            
+                this.listBox.DataSource = m_Bridge.m_Friends;            
             }
             if (i_ControlName == "VideosDataSection")
             {
-                this.listBox.DataSource = m_bridge.m_videos;
+                this.listBox.DataSource = m_Bridge.m_Videos;
             }
             if (i_ControlName == "GalleryDataSection")
             {
-                this.listBox.DataSource = m_bridge.m_photos;
+                this.listBox.DataSource = m_Bridge.m_Photos;
             }
         }
 
-        private void InsertDataToComboBoxFilter(string i_ControlName)
+        private void insertDataToComboBoxFilter(string i_ControlName)
         {
             if (i_ControlName == "PostsDataSection")
             {
@@ -125,7 +125,7 @@ namespace BasicFacebookFeatures
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!m_isDataDisplayedInListBox || m_bridge.m_loggedInUser == null)
+            if (!m_IsDataDisplayedInListBox || m_Bridge.m_LoggedInUser == null)
             {
                 return;
             }
@@ -146,12 +146,12 @@ namespace BasicFacebookFeatures
                     string pictureUrl = pictureUrlProperty.GetValue(selectedItem) as string;
                     if (!string.IsNullOrEmpty(pictureUrl))
                     {
-                        if (m_formMain == null)
+                        if (m_FormMain == null)
                         {
-                            m_formMain = Application.OpenForms["FormMain"] as FormMain;
+                            m_FormMain = Application.OpenForms["FormMain"] as FormMain;
                         }
 
-                        PictureBox pictureBox = m_formMain.PictureBoxLeft;
+                        PictureBox pictureBox = m_FormMain.m_PictureBoxLeft;
                         pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                         pictureBox.ImageLocation = pictureUrl;
                     }
@@ -173,16 +173,16 @@ namespace BasicFacebookFeatures
                 {
                     this.listBox.DisplayMember = selectedMember;
                 }
-                this.listBox.DataSource = FilterItems.FilterByMember(m_bridge.m_posts, selectedMember);
+                this.listBox.DataSource = ItemsFilter.FilterByMember(m_Bridge.m_Posts, selectedMember);
                
             }
             if (controlName == "FriendsDataSection")
             {
-                this.listBox.DataSource = FilterItems.FilterByMember(m_bridge.m_friends, selectedMember);
+                this.listBox.DataSource = ItemsFilter.FilterByMember(m_Bridge.m_Friends, selectedMember);
             }
             if (controlName == "VideosDataSection")
             {
-                this.listBox.DataSource = FilterItems.FilterByMember(m_bridge.m_videos, selectedMember);
+                this.listBox.DataSource = ItemsFilter.FilterByMember(m_Bridge.m_Videos, selectedMember);
             }
             if (controlName == "GalleryDataSection")
             {
@@ -190,13 +190,11 @@ namespace BasicFacebookFeatures
                 {
                     this.listBox.DisplayMember = "ToString";
                 }
-                this.listBox.DataSource = FilterItems.FilterByMember(m_bridge.m_photos, selectedMember);
+                this.listBox.DataSource = ItemsFilter.FilterByMember(m_Bridge.m_Photos, selectedMember);
             }
         }
 
         
-
-
         private void textBoxFilter_TextChanged(object sender, EventArgs e)
         {
            
@@ -216,16 +214,16 @@ namespace BasicFacebookFeatures
                         {
                             propertyName = "ToString";
                         }
-                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_posts, propertyName, textBoxFilter.Text);
+                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Posts, propertyName, textBoxFilter.Text);
                     }
                     if (linkSearchName == "FriendsDataSection")
                     {
-                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_friends, propertyName, textBoxFilter.Text);
-                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_friends, propertyName, textBoxFilter.Text);
+                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Friends, propertyName, textBoxFilter.Text);
+                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Friends, propertyName, textBoxFilter.Text);
                     }
                     if (linkSearchName == "VideosDataSection")
                     {
-                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_videos, propertyName, textBoxFilter.Text);
+                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Videos, propertyName, textBoxFilter.Text);
                     }
                     if (linkSearchName == "GalleryDataSection")
                     {
@@ -233,7 +231,7 @@ namespace BasicFacebookFeatures
                         {
                             propertyName = "Name";
                         }
-                        this.listBox.DataSource = FilterItems.FilterByProperty(m_bridge.m_photos, propertyName, textBoxFilter.Text);
+                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Photos, propertyName, textBoxFilter.Text);
                     }
                 }
                 catch (Exception ex) 
@@ -242,8 +240,5 @@ namespace BasicFacebookFeatures
                 }
             }
         }
-
-        
-        
     }
 }

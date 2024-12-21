@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace BasicFacebookFeatures
 {
-    internal static class FilterItems
+    internal static class ItemsFilter
     {
        
         public static List<T> FilterByProperty<T>(List<T> i_Items, string i_PropertyName, string i_FilterValue)
@@ -75,10 +75,7 @@ namespace BasicFacebookFeatures
                     }
                 }
             }
-
             return filteredList; 
         }
-
-
     }
 }
