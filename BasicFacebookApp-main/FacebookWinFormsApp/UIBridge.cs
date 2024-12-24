@@ -52,6 +52,7 @@ namespace BasicFacebookFeatures
         {
             ErrorOccured?.Invoke(i_ErrorMessage);
         }
+
         public void Logout()
         {
             try
@@ -69,6 +70,7 @@ namespace BasicFacebookFeatures
             object collection = m_UserManager.GetDataCollectionByType(i_CollectionType);
             saveCollectionToBridge((dynamic)collection, i_CollectionType);
         }
+
         private void saveCollectionToBridge(dynamic collection, string i_CollectionType)
         {
             if (i_CollectionType == "post" && collection is FacebookObjectCollection<Post> postCollection)
@@ -143,6 +145,7 @@ namespace BasicFacebookFeatures
             {
                 OnErrorOccured(ex.Message);
             }
+
             return m_Drafts;
         }
 
@@ -161,6 +164,7 @@ namespace BasicFacebookFeatures
             {
                 OnErrorOccured(ex.Message);
             }
+
             return m_DraftManager.m_Drafts;
         }
 

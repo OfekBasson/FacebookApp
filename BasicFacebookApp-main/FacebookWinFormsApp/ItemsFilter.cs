@@ -15,12 +15,13 @@ namespace BasicFacebookFeatures
         public static List<T> FilterByProperty<T>(List<T> i_Items, string i_PropertyName, string i_FilterValue)
         {
             if (i_Items == null)
+            {
                 throw new ArgumentNullException(nameof(i_Items), "Items list cannot be null.");
+            }
             if (string.IsNullOrWhiteSpace(i_PropertyName) || i_FilterValue == "")
             {
                 return i_Items;
             }
-
             if (i_PropertyName == "ToString")
             {
                 return filterByToString(i_Items, i_PropertyName, i_FilterValue);
@@ -34,7 +35,9 @@ namespace BasicFacebookFeatures
             // Check if the property exists in type T
             var property = typeof(T).GetProperty(i_PropertyName);
             if (property == null)
+            {
                 throw new InvalidOperationException($"Type {typeof(T)} does not have a property named '{i_PropertyName}'.");
+            }
 
             return i_Items
                 .Where(item =>
@@ -75,6 +78,7 @@ namespace BasicFacebookFeatures
                     }
                 }
             }
+
             return filteredList; 
         }
     }

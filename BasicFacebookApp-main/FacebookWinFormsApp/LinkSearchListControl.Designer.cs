@@ -40,8 +40,9 @@
             this.link.AutoSize = true;
             this.link.Dock = System.Windows.Forms.DockStyle.Top;
             this.link.Location = new System.Drawing.Point(0, 0);
+            this.link.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.link.Name = "link";
-            this.link.Size = new System.Drawing.Size(49, 20);
+            this.link.Size = new System.Drawing.Size(34, 13);
             this.link.TabIndex = 0;
             this.link.TabStop = true;
             this.link.Text = "Show";
@@ -51,30 +52,30 @@
             // 
             this.listBox.BackColor = System.Drawing.SystemColors.HighlightText;
             this.listBox.FormattingEnabled = true;
-            this.listBox.ItemHeight = 20;
-            this.listBox.Location = new System.Drawing.Point(-3, 77);
-            this.listBox.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.listBox.Location = new System.Drawing.Point(-2, 50);
+            this.listBox.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(240, 124);
+            this.listBox.Size = new System.Drawing.Size(161, 82);
             this.listBox.TabIndex = 1;
             this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox1_SelectedIndexChanged);
             // 
             // comboBoxFilter
             // 
             this.comboBoxFilter.FormattingEnabled = true;
-            this.comboBoxFilter.Location = new System.Drawing.Point(0, 23);
+            this.comboBoxFilter.Location = new System.Drawing.Point(0, 15);
+            this.comboBoxFilter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.comboBoxFilter.Name = "comboBoxFilter";
-            this.comboBoxFilter.Size = new System.Drawing.Size(240, 28);
+            this.comboBoxFilter.Size = new System.Drawing.Size(161, 21);
             this.comboBoxFilter.TabIndex = 4;
             this.comboBoxFilter.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
             // 
             // textBoxFilter
             // 
             this.textBoxFilter.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBoxFilter.Location = new System.Drawing.Point(0, 51);
-            this.textBoxFilter.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.textBoxFilter.Location = new System.Drawing.Point(0, 33);
+            this.textBoxFilter.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.textBoxFilter.Name = "textBoxFilter";
-            this.textBoxFilter.Size = new System.Drawing.Size(172, 26);
+            this.textBoxFilter.Size = new System.Drawing.Size(115, 20);
             this.textBoxFilter.TabIndex = 3;
             this.textBoxFilter.TextChanged += new System.EventHandler(this.textBoxFilter_TextChanged);
             // 
@@ -82,9 +83,10 @@
             // 
             this.buttonFilter.BackColor = System.Drawing.Color.LightSkyBlue;
             this.buttonFilter.ForeColor = System.Drawing.SystemColors.ControlLightLight;
-            this.buttonFilter.Location = new System.Drawing.Point(171, 48);
+            this.buttonFilter.Location = new System.Drawing.Point(114, 31);
+            this.buttonFilter.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonFilter.Name = "buttonFilter";
-            this.buttonFilter.Size = new System.Drawing.Size(70, 37);
+            this.buttonFilter.Size = new System.Drawing.Size(47, 24);
             this.buttonFilter.TabIndex = 5;
             this.buttonFilter.Text = "Filter";
             this.buttonFilter.UseVisualStyleBackColor = false;
@@ -92,16 +94,16 @@
             // 
             // LinkSearchListControl
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.buttonFilter);
             this.Controls.Add(this.listBox);
             this.Controls.Add(this.textBoxFilter);
             this.Controls.Add(this.comboBoxFilter);
             this.Controls.Add(this.link);
-            this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
+            this.Margin = new System.Windows.Forms.Padding(2, 3, 2, 3);
             this.Name = "LinkSearchListControl";
-            this.Size = new System.Drawing.Size(238, 202);
+            this.Size = new System.Drawing.Size(159, 131);
             this.Load += new System.EventHandler(this.UserDataSection_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

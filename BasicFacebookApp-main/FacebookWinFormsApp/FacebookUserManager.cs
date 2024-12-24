@@ -21,9 +21,9 @@ namespace BasicFacebookFeatures
                login(i_AppId);
             }
             
-            return m_LoggedInUser;
-            
+            return m_LoggedInUser; 
         }
+
         private void login(string i_AppID)
         {
             LoginResult loginResult = FacebookService.Login(
@@ -46,8 +46,10 @@ namespace BasicFacebookFeatures
                 {
                     throw new LoginException("Logging in wasn't successful - Facebook server response to login was unsuccessful");
                 }
+
                 return;
             }
+
             throw new LoginException("Logging in wasn't successful - unknown problem");
         }
         public void Logout()
@@ -60,6 +62,7 @@ namespace BasicFacebookFeatures
         {
             return m_LoggedInUser != null;
         }
+
         public object GetDataCollectionByType(string i_CollectionType)
         {
             if (i_CollectionType == "post")
@@ -87,7 +90,6 @@ namespace BasicFacebookFeatures
             else {
                 throw new DataCollectionInformationException($"Collection type {i_CollectionType} isn't recognized.");
             }
-
         }
 
         public void PostStatus(string i_Status)

@@ -151,19 +151,16 @@ namespace BasicFacebookFeatures
                             m_FormMain = Application.OpenForms["FormMain"] as FormMain;
                         }
 
-                        PictureBox pictureBox = m_FormMain.m_PictureBoxLeft;
+                        PictureBox pictureBox = m_FormMain.m_PictureBoxLeft();
                         pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                         pictureBox.ImageLocation = pictureUrl;
                     }
                 }
             }
         }
-        //why its still box1 and not filter? 
+        
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //MessageBox.Show("here");
-            //TODO: sometimes the list is full of empty string due to location="" or something.. 
-            // Filter out items with an empty or null property for DisplayMember
             string selectedMember = this.comboBoxFilter.SelectedItem.ToString().Replace(" ", "");
             string controlName = this.Name;
             this.listBox.DataSource = null;

@@ -14,7 +14,6 @@ namespace BasicFacebookFeatures
         private readonly string m_FilePath;
         public List<PostDraft> m_Drafts { get; set; }
 
-
         public DraftSManager()
         {
             m_Drafts = new List<PostDraft>();

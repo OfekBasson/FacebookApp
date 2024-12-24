@@ -16,12 +16,10 @@ namespace BasicFacebookFeatures
     {
         private string m_AppId = "917683610037169";
         private UIBridge m_Bridge { get; set; }
-        public PictureBox m_PictureBoxLeft
+        
+        public PictureBox m_PictureBoxLeft()
         {
-            get
-            {
                 return this.pictureBoxLeft;
-            }
         }
 
         public FormMain()
@@ -33,12 +31,12 @@ namespace BasicFacebookFeatures
             {
                 control.m_Bridge = m_Bridge;
             }
+
             m_Bridge.ErrorOccured += bridge_ErrorOccured;
             loadDrafts();
             showOrHideControlers(false);
             this.richTextBoxPosts.Text = "Write Here...";
             FacebookService.s_CollectionLimit = 25;
-            //Console.WriteLine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData));
         }
 
 
@@ -47,11 +45,8 @@ namespace BasicFacebookFeatures
             MessageBox.Show($"Error occured, please try again or call support 052538164, and add also 8.\nError message: {i_ErrorMessage}");
         }
 
-
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText("ofekofekfacebook@gmail.com");
-            //Clipboard.SetText("design.patterns");
             User loggedInUser = m_Bridge.LogIn(m_AppId);
             if (loggedInUser != null)
             {
@@ -75,6 +70,7 @@ namespace BasicFacebookFeatures
                 UserSummaryLabel.Text += $"\nand born in {i_LoggedInUser.Location.Name}";
             }
         }
+
         private void showOrHideControlers(bool i_IsShown)
         {
             this.richTextBoxPosts.Visible = i_IsShown;
@@ -86,7 +82,6 @@ namespace BasicFacebookFeatures
             this.buttonClearDrafts.Visible = i_IsShown;
             this.buttonSaveDraft.Visible = i_IsShown;
             this.listBoxDrafts.Visible = i_IsShown;
-
         }
 
         private void updateButtonsOnLogin()
@@ -111,6 +106,7 @@ namespace BasicFacebookFeatures
             {
                 control.HideDataFromListBox();
             }
+
             showOrHideControlers(false);
             m_Bridge.SaveDraftsToFile();
         }

@@ -11,7 +11,6 @@ namespace BasicFacebookFeatures
         public string m_Title { get; set; }
         public string m_Content { get; set; }
 
-
         public override string ToString()
         {
             return $"{m_Title} - {m_Content}"; ;
