@@ -96,30 +96,33 @@ namespace BasicFacebookFeatures
 
         private void insertDataToComboBoxFilter(string i_ControlName)
         {
-            if (i_ControlName == "PostsDataSection")
+            if (this.comboBoxFilter.Items.Count == 0)
             {
-                this.comboBoxFilter.Items.Add("Name");
-                this.comboBoxFilter.Items.Add("Created Time");
-                this.comboBoxFilter.Items.Add("Place");
-                this.comboBoxFilter.Items.Add("Description");
-            }
-            if (i_ControlName == "FriendsDataSection")
-            {
-                this.comboBoxFilter.Items.Add("Name");
-                this.comboBoxFilter.Items.Add("Location");
-                this.comboBoxFilter.Items.Add("Email");
-            }
-            if (i_ControlName == "VideosDataSection")
-            {
-                this.comboBoxFilter.Items.Add("Name"); 
-                this.comboBoxFilter.Items.Add("Created Time");
-                this.comboBoxFilter.Items.Add("Location");
-            }
-            if (i_ControlName == "GalleryDataSection")
-            {
-                this.comboBoxFilter.Items.Add("To String");
-                this.comboBoxFilter.Items.Add("Location");
-                this.comboBoxFilter.Items.Add("Description");
+                if (i_ControlName == "PostsDataSection")
+                {
+                    this.comboBoxFilter.Items.Add("Name");
+                    this.comboBoxFilter.Items.Add("Created Time");
+                    this.comboBoxFilter.Items.Add("Place");
+                    this.comboBoxFilter.Items.Add("Description");
+                }
+                if (i_ControlName == "FriendsDataSection")
+                {
+                    this.comboBoxFilter.Items.Add("Name");
+                    this.comboBoxFilter.Items.Add("Location");
+                    this.comboBoxFilter.Items.Add("Email");
+                }
+                if (i_ControlName == "VideosDataSection")
+                {
+                    this.comboBoxFilter.Items.Add("Name");
+                    this.comboBoxFilter.Items.Add("Created Time");
+                    this.comboBoxFilter.Items.Add("Location");
+                }
+                if (i_ControlName == "GalleryDataSection")
+                {
+                    this.comboBoxFilter.Items.Add("To String");
+                    this.comboBoxFilter.Items.Add("Location");
+                    this.comboBoxFilter.Items.Add("Description");
+                }
             }
         }
 

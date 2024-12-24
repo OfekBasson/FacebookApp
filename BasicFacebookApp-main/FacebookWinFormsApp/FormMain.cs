@@ -76,7 +76,6 @@ namespace BasicFacebookFeatures
             this.richTextBoxPosts.Visible = i_IsShown;
             this.buttonPost.Visible = i_IsShown;
             this.userDataGroupBox.Visible = i_IsShown;
-            this.axWindowsMediaPlayer1.Visible = i_IsShown;
             this.pictureBoxLeft.Visible = i_IsShown;
             UserSummaryLabel.Visible = i_IsShown;
             this.buttonClearDrafts.Visible = i_IsShown;
