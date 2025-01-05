@@ -33,7 +33,7 @@ namespace BasicFacebookFeatures
             }
 
             m_Bridge.ErrorOccured += bridge_ErrorOccured;
-            loadDrafts();
+            postDraftBindingSource.DataSource = m_Bridge.m_Drafts;
             showOrHideControlers(false);
             this.richTextBoxPosts.Text = "Write Here...";
             FacebookService.s_CollectionLimit = 25;
@@ -81,6 +81,7 @@ namespace BasicFacebookFeatures
             this.buttonClearDrafts.Visible = i_IsShown;
             this.buttonSaveDraft.Visible = i_IsShown;
             this.listBoxDrafts.Visible = i_IsShown;
+            this.panelDraft.Visible = i_IsShown;
         }
 
         private void updateButtonsOnLogin()
@@ -118,51 +119,14 @@ namespace BasicFacebookFeatures
             buttonLogout.Enabled = false;
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBoxAppID_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
 
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
         private void FormMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void axWindowsMediaPlayer1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void InfoDataSection_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void infoDataSection_Load_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void labelToken_Click(object sender, EventArgs e)
         {
 
         }
@@ -231,35 +195,12 @@ namespace BasicFacebookFeatures
         private void saveDraft()
         {
             Console.WriteLine("on posts: " + this.richTextBoxPosts.Text);
-            List<PostDraft> postsDraft = m_Bridge.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
-            refreshListBoxDrafts(postsDraft);
-        }
-
-        private void refreshListBoxDrafts(List<PostDraft> i_PostsDraft)
-        {
-            // Reset the DataSource to refresh the ListBox
-            this.listBoxDrafts.DataSource = null;
-            this.listBoxDrafts.DataSource = i_PostsDraft;
-            this.listBoxDrafts.DisplayMember = "m_Title";
-        }
-
-        private void loadDrafts()
-        {
-            this.listBoxDrafts.DataSource = m_Bridge.LoadDrafts();
-        }
-
-        private void listBoxDrafts_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int index = listBoxDrafts.SelectedIndex;
-            if (index == -1) return;
-            List<PostDraft> drafts = m_Bridge.GetDrafts();
-            Console.WriteLine("content: " + drafts[index].m_Content);
-            this.richTextBoxPosts.Text = drafts[index].m_Content;
+            m_Bridge.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
         }
 
         private void buttonClearDrafts_Click(object sender, EventArgs e)
         {
-            refreshListBoxDrafts(m_Bridge.ClearDrafts());
+            m_Bridge.ClearDrafts();
         }
     }
 }

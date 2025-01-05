@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,13 +18,14 @@ namespace BasicFacebookFeatures
         public List<Video> m_Videos { get; set; }
         public List<User> m_Friends { get; set; }
         public List<Photo> m_Photos { get; set; }
-        public List<PostDraft> m_Drafts { get; set; }
+        public BindingList<PostDraft> m_Drafts { get; set; }
         public event Action<string> ErrorOccured;
 
         public UIBridge()
         {
             m_UserManager = new FacebooktUserManager();
             m_DraftManager = new DraftSManager();
+            loadDrafts();
         }
 
         public User LogIn(string i_AppId)
@@ -107,7 +109,7 @@ namespace BasicFacebookFeatures
             }
         }
 
-        public List<PostDraft> AddDraft(string i_Title, string i_Content)
+        public void AddDraft(string i_Title, string i_Content)
         {
             try
             {
@@ -120,7 +122,6 @@ namespace BasicFacebookFeatures
             { 
                 OnErrorOccured(ex.Message);
             }
-            return m_DraftManager.m_Drafts;
         }
 
         public void SaveDraftsToFile()
@@ -135,26 +136,20 @@ namespace BasicFacebookFeatures
             }
         }
 
-        public List<PostDraft> LoadDrafts()
+        private void loadDrafts()
         {
             try
             {
-                m_Drafts = m_DraftManager.LoadDrafts();
+                m_DraftManager.LoadDrafts();
+                m_Drafts = m_DraftManager.m_Drafts; //initialize m_Drafts
             }
             catch (Exception ex)
             {
                 OnErrorOccured(ex.Message);
             }
-
-            return m_Drafts;
         }
 
-        public List<PostDraft> GetDrafts()
-        {
-            return m_DraftManager.m_Drafts;
-        }
-
-        public List<PostDraft> ClearDrafts()
+        public void ClearDrafts()
         {
             try
             {
@@ -164,8 +159,6 @@ namespace BasicFacebookFeatures
             {
                 OnErrorOccured(ex.Message);
             }
-
-            return m_DraftManager.m_Drafts;
         }
 
     }

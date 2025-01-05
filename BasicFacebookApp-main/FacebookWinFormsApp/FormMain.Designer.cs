@@ -28,34 +28,63 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.Label m_ContentLabel;
+            System.Windows.Forms.Label m_TitleLabel;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.buttonClearDrafts = new System.Windows.Forms.Button();
+            this.panelDraft = new System.Windows.Forms.Panel();
+            this.m_ContentTextBox = new System.Windows.Forms.TextBox();
+            this.postDraftBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.m_TitleTextBox = new System.Windows.Forms.TextBox();
             this.listBoxDrafts = new System.Windows.Forms.ListBox();
+            this.buttonClearDrafts = new System.Windows.Forms.Button();
             this.buttonSaveDraft = new System.Windows.Forms.Button();
             this.buttonPost = new System.Windows.Forms.Button();
             this.richTextBoxPosts = new System.Windows.Forms.RichTextBox();
             this.userDataGroupBox = new System.Windows.Forms.GroupBox();
             this.UserSummaryLabel = new System.Windows.Forms.Label();
+            this.GalleryDataSection = new BasicFacebookFeatures.LinkSearchListControl();
+            this.PostsDataSection = new BasicFacebookFeatures.LinkSearchListControl();
+            this.FriendsDataSection = new BasicFacebookFeatures.LinkSearchListControl();
+            this.VideosDataSection = new BasicFacebookFeatures.LinkSearchListControl();
             this.FacebookLogo = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.buttonLogin = new System.Windows.Forms.Button();
             this.buttonLogout = new System.Windows.Forms.Button();
             this.pictureBoxLeft = new System.Windows.Forms.PictureBox();
             this.pictureBoxProfile = new System.Windows.Forms.PictureBox();
-            this.GalleryDataSection = new BasicFacebookFeatures.LinkSearchListControl();
-            this.PostsDataSection = new BasicFacebookFeatures.LinkSearchListControl();
-            this.FriendsDataSection = new BasicFacebookFeatures.LinkSearchListControl();
-            this.VideosDataSection = new BasicFacebookFeatures.LinkSearchListControl();
+            m_ContentLabel = new System.Windows.Forms.Label();
+            m_TitleLabel = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.panelDraft.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postDraftBindingSource)).BeginInit();
             this.userDataGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FacebookLogo)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLeft)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxProfile)).BeginInit();
             this.SuspendLayout();
+            // 
+            // m_ContentLabel
+            // 
+            m_ContentLabel.AutoSize = true;
+            m_ContentLabel.Location = new System.Drawing.Point(16, 54);
+            m_ContentLabel.Name = "m_ContentLabel";
+            m_ContentLabel.Size = new System.Drawing.Size(94, 26);
+            m_ContentLabel.TabIndex = 0;
+            m_ContentLabel.Text = "Content:";
+            // 
+            // m_TitleLabel
+            // 
+            m_TitleLabel.AutoSize = true;
+            m_TitleLabel.Location = new System.Drawing.Point(13, 16);
+            m_TitleLabel.Name = "m_TitleLabel";
+            m_TitleLabel.Size = new System.Drawing.Size(66, 26);
+            m_TitleLabel.TabIndex = 2;
+            m_TitleLabel.Text = "Time:";
             // 
             // tabControl1
             // 
@@ -69,9 +98,11 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.AutoScroll = true;
             this.tabPage1.BackColor = System.Drawing.Color.White;
-            this.tabPage1.Controls.Add(this.buttonClearDrafts);
+            this.tabPage1.Controls.Add(this.panelDraft);
             this.tabPage1.Controls.Add(this.listBoxDrafts);
+            this.tabPage1.Controls.Add(this.buttonClearDrafts);
             this.tabPage1.Controls.Add(this.buttonSaveDraft);
             this.tabPage1.Controls.Add(this.buttonPost);
             this.tabPage1.Controls.Add(this.richTextBoxPosts);
@@ -88,6 +119,49 @@
             this.tabPage1.Text = "tabPage1";
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // panelDraft
+            // 
+            this.panelDraft.Controls.Add(m_ContentLabel);
+            this.panelDraft.Controls.Add(this.m_ContentTextBox);
+            this.panelDraft.Controls.Add(m_TitleLabel);
+            this.panelDraft.Controls.Add(this.m_TitleTextBox);
+            this.panelDraft.Location = new System.Drawing.Point(415, 581);
+            this.panelDraft.Name = "panelDraft";
+            this.panelDraft.Size = new System.Drawing.Size(424, 155);
+            this.panelDraft.TabIndex = 106;
+            // 
+            // m_ContentTextBox
+            // 
+            this.m_ContentTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.postDraftBindingSource, "m_Content", true));
+            this.m_ContentTextBox.Location = new System.Drawing.Point(18, 83);
+            this.m_ContentTextBox.Multiline = true;
+            this.m_ContentTextBox.Name = "m_ContentTextBox";
+            this.m_ContentTextBox.Size = new System.Drawing.Size(389, 69);
+            this.m_ContentTextBox.TabIndex = 1;
+            // 
+            // postDraftBindingSource
+            // 
+            this.postDraftBindingSource.DataSource = typeof(BasicFacebookFeatures.PostDraft);
+            // 
+            // m_TitleTextBox
+            // 
+            this.m_TitleTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.postDraftBindingSource, "m_Title", true));
+            this.m_TitleTextBox.Location = new System.Drawing.Point(94, 13);
+            this.m_TitleTextBox.Name = "m_TitleTextBox";
+            this.m_TitleTextBox.Size = new System.Drawing.Size(313, 32);
+            this.m_TitleTextBox.TabIndex = 3;
+            // 
+            // listBoxDrafts
+            // 
+            this.listBoxDrafts.DataSource = this.postDraftBindingSource;
+            this.listBoxDrafts.DisplayMember = "m_Title";
+            this.listBoxDrafts.FormattingEnabled = true;
+            this.listBoxDrafts.ItemHeight = 26;
+            this.listBoxDrafts.Location = new System.Drawing.Point(843, 628);
+            this.listBoxDrafts.Name = "listBoxDrafts";
+            this.listBoxDrafts.Size = new System.Drawing.Size(379, 108);
+            this.listBoxDrafts.TabIndex = 102;
+            // 
             // buttonClearDrafts
             // 
             this.buttonClearDrafts.BackColor = System.Drawing.Color.LightSkyBlue;
@@ -99,16 +173,6 @@
             this.buttonClearDrafts.Text = "Clear All Drafts";
             this.buttonClearDrafts.UseVisualStyleBackColor = false;
             this.buttonClearDrafts.Click += new System.EventHandler(this.buttonClearDrafts_Click);
-            // 
-            // listBoxDrafts
-            // 
-            this.listBoxDrafts.FormattingEnabled = true;
-            this.listBoxDrafts.ItemHeight = 26;
-            this.listBoxDrafts.Location = new System.Drawing.Point(845, 628);
-            this.listBoxDrafts.Name = "listBoxDrafts";
-            this.listBoxDrafts.Size = new System.Drawing.Size(377, 108);
-            this.listBoxDrafts.TabIndex = 100;
-            this.listBoxDrafts.SelectedIndexChanged += new System.EventHandler(this.listBoxDrafts_SelectedIndexChanged);
             // 
             // buttonSaveDraft
             // 
@@ -167,6 +231,49 @@
             this.UserSummaryLabel.Size = new System.Drawing.Size(0, 26);
             this.UserSummaryLabel.TabIndex = 1;
             this.UserSummaryLabel.Click += new System.EventHandler(this.label1_Click_1);
+            // 
+            // GalleryDataSection
+            // 
+            this.GalleryDataSection.Location = new System.Drawing.Point(982, 27);
+            this.GalleryDataSection.m_Bridge = null;
+            this.GalleryDataSection.m_LinkText = "Show Gallery";
+            this.GalleryDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.GalleryDataSection.Name = "GalleryDataSection";
+            this.GalleryDataSection.Size = new System.Drawing.Size(242, 209);
+            this.GalleryDataSection.TabIndex = 50;
+            this.GalleryDataSection.Load += new System.EventHandler(this.GalleryDataSection_Load);
+            // 
+            // PostsDataSection
+            // 
+            this.PostsDataSection.Location = new System.Drawing.Point(240, 24);
+            this.PostsDataSection.m_Bridge = null;
+            this.PostsDataSection.m_LinkText = "Show Posts";
+            this.PostsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.PostsDataSection.Name = "PostsDataSection";
+            this.PostsDataSection.Size = new System.Drawing.Size(241, 209);
+            this.PostsDataSection.TabIndex = 20;
+            // 
+            // FriendsDataSection
+            // 
+            this.FriendsDataSection.Location = new System.Drawing.Point(487, 24);
+            this.FriendsDataSection.m_Bridge = null;
+            this.FriendsDataSection.m_LinkText = "Show Friends";
+            this.FriendsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.FriendsDataSection.Name = "FriendsDataSection";
+            this.FriendsDataSection.Size = new System.Drawing.Size(241, 209);
+            this.FriendsDataSection.TabIndex = 30;
+            this.FriendsDataSection.Load += new System.EventHandler(this.FriendsDataSection_Load);
+            // 
+            // VideosDataSection
+            // 
+            this.VideosDataSection.Location = new System.Drawing.Point(734, 27);
+            this.VideosDataSection.m_Bridge = null;
+            this.VideosDataSection.m_LinkText = "Show Videos";
+            this.VideosDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.VideosDataSection.Name = "VideosDataSection";
+            this.VideosDataSection.Size = new System.Drawing.Size(242, 209);
+            this.VideosDataSection.TabIndex = 40;
+            this.VideosDataSection.Load += new System.EventHandler(this.VideosDataSection_Load);
             // 
             // FacebookLogo
             // 
@@ -232,49 +339,6 @@
             this.pictureBoxProfile.TabStop = false;
             this.pictureBoxProfile.Click += new System.EventHandler(this.pictureBoxProfile_Click);
             // 
-            // GalleryDataSection
-            // 
-            this.GalleryDataSection.Location = new System.Drawing.Point(982, 27);
-            this.GalleryDataSection.m_Bridge = null;
-            this.GalleryDataSection.m_LinkText = "Show Gallery";
-            this.GalleryDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.GalleryDataSection.Name = "GalleryDataSection";
-            this.GalleryDataSection.Size = new System.Drawing.Size(242, 209);
-            this.GalleryDataSection.TabIndex = 50;
-            this.GalleryDataSection.Load += new System.EventHandler(this.GalleryDataSection_Load);
-            // 
-            // PostsDataSection
-            // 
-            this.PostsDataSection.Location = new System.Drawing.Point(240, 24);
-            this.PostsDataSection.m_Bridge = null;
-            this.PostsDataSection.m_LinkText = "Show Posts";
-            this.PostsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.PostsDataSection.Name = "PostsDataSection";
-            this.PostsDataSection.Size = new System.Drawing.Size(241, 209);
-            this.PostsDataSection.TabIndex = 20;
-            // 
-            // FriendsDataSection
-            // 
-            this.FriendsDataSection.Location = new System.Drawing.Point(487, 24);
-            this.FriendsDataSection.m_Bridge = null;
-            this.FriendsDataSection.m_LinkText = "Show Friends";
-            this.FriendsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.FriendsDataSection.Name = "FriendsDataSection";
-            this.FriendsDataSection.Size = new System.Drawing.Size(241, 209);
-            this.FriendsDataSection.TabIndex = 30;
-            this.FriendsDataSection.Load += new System.EventHandler(this.FriendsDataSection_Load);
-            // 
-            // VideosDataSection
-            // 
-            this.VideosDataSection.Location = new System.Drawing.Point(734, 27);
-            this.VideosDataSection.m_Bridge = null;
-            this.VideosDataSection.m_LinkText = "Show Videos";
-            this.VideosDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.VideosDataSection.Name = "VideosDataSection";
-            this.VideosDataSection.Size = new System.Drawing.Size(242, 209);
-            this.VideosDataSection.TabIndex = 40;
-            this.VideosDataSection.Load += new System.EventHandler(this.VideosDataSection_Load);
-            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(13F, 26F);
@@ -293,6 +357,9 @@
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.panelDraft.ResumeLayout(false);
+            this.panelDraft.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.postDraftBindingSource)).EndInit();
             this.userDataGroupBox.ResumeLayout(false);
             this.userDataGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.FacebookLogo)).EndInit();
@@ -322,8 +389,12 @@
         private System.Windows.Forms.RichTextBox richTextBoxPosts;
         private System.Windows.Forms.Button buttonPost;
         private System.Windows.Forms.Button buttonSaveDraft;
-        private System.Windows.Forms.ListBox listBoxDrafts;
         private System.Windows.Forms.Button buttonClearDrafts;
+        private System.Windows.Forms.ListBox listBoxDrafts;
+        private System.Windows.Forms.Panel panelDraft;
+        private System.Windows.Forms.TextBox m_ContentTextBox;
+        private System.Windows.Forms.BindingSource postDraftBindingSource;
+        private System.Windows.Forms.TextBox m_TitleTextBox;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,11 +13,11 @@ namespace BasicFacebookFeatures
     {
         private readonly string m_DirectoryPath;
         private readonly string m_FilePath;
-        public List<PostDraft> m_Drafts { get; set; }
+        public BindingList<PostDraft> m_Drafts { get; set; }
 
         public DraftSManager()
         {
-            m_Drafts = new List<PostDraft>();
+            m_Drafts = new BindingList<PostDraft>();
             m_DirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FacebookApp");
             m_FilePath = Path.Combine(m_DirectoryPath, "draftPosts.xml");
             if (!Directory.Exists(m_DirectoryPath))
@@ -27,21 +28,21 @@ namespace BasicFacebookFeatures
 
         public void SaveDrafts()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(List<PostDraft>));
+            XmlSerializer serializer = new XmlSerializer(typeof(BindingList<PostDraft>));
             using (Stream stream = new FileStream(m_FilePath, FileMode.Create))
             {
                 serializer.Serialize(stream, m_Drafts);
             }
         }
 
-        public List<PostDraft> LoadDrafts()
+        public BindingList<PostDraft> LoadDrafts()
         {
             if (File.Exists(m_FilePath))
             {
-                XmlSerializer serializer = new XmlSerializer(typeof(List<PostDraft>));
+                XmlSerializer serializer = new XmlSerializer(typeof(BindingList<PostDraft>));
                 using (Stream stream = new FileStream(m_FilePath, FileMode.Open))
                 {
-                    m_Drafts = (List<PostDraft>)serializer.Deserialize(stream); 
+                    m_Drafts = (BindingList<PostDraft>)serializer.Deserialize(stream); 
                 }
             }
 

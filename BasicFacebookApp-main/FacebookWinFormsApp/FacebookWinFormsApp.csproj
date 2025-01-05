@@ -114,6 +114,7 @@
     <EmbeddedResource Include="LinkSearchListControl.resx">
       <DependentUpon>LinkSearchListControl.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Properties\DataSources\PostDraft.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
