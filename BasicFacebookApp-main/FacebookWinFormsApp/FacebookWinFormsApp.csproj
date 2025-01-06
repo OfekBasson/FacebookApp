@@ -78,7 +78,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlDataHandlerFactory.cs" />
+    <Compile Include="ControlTypeMappings.cs" />
     <Compile Include="DraftSManager.cs" />
+    <Compile Include="FilterFactory.cs" />
     <Compile Include="FriendsDataHandler.cs" />
     <Compile Include="GalleryDataHandler.cs" />
     <Compile Include="IControlDataHandler.cs" />

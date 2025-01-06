@@ -1,4 +1,5 @@
-﻿using FacebookWrapper.ObjectModel;
+﻿using CefSharp.DevTools.Accessibility;
+using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -53,11 +54,16 @@ namespace BasicFacebookFeatures
                     MessageBox.Show("Please log in to display information");
                 }
             }
+            else
+            {
+                HideDataFromListBox();
+            }
+                
         }
 
         public void InitializeHandler(string i_ControlName)
         {
-            Type dataType = ControlDataHandlerFactory.s_ControlTypeMappings[i_ControlName];
+            Type dataType = ControlTypeMappings.s_ControlTypeMappings[i_ControlName];
             MethodInfo factoryMethod = typeof(ControlDataHandlerFactory)
                 .GetMethod("CreateHandler")
                 ?.MakeGenericMethod(dataType);
@@ -106,11 +112,9 @@ namespace BasicFacebookFeatures
             if (sender is ListBox listBox && listBox.SelectedItem != null)
             {
                 var selectedItem = listBox.SelectedItem;
-                Console.WriteLine(selectedItem.GetType().ToString());
                 var pictureUrlProperty = selectedItem.GetType() == typeof(Photo) ?
                         selectedItem.GetType().GetProperty("PictureAlbumURL") :
                         selectedItem.GetType().GetProperty("PictureURL");
-                Console.WriteLine(pictureUrlProperty.ToString());
                 if (pictureUrlProperty != null)
                 {
                     string pictureUrl = pictureUrlProperty.GetValue(selectedItem) as string;
@@ -131,34 +135,7 @@ namespace BasicFacebookFeatures
         
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string selectedMember = this.comboBoxFilter.SelectedItem.ToString().Replace(" ", "");
-            string controlName = this.Name;
-            this.listBox.DataSource = null;
-            if (controlName == "PostsDataSection")
-            {
-                if(selectedMember == "CreatedTime")
-                {
-                    this.listBox.DisplayMember = selectedMember;
-                }
-                this.listBox.DataSource = ItemsFilter.FilterByMember(m_Bridge.m_Posts, selectedMember);
-               
-            }
-            if (controlName == "FriendsDataSection")
-            {
-                this.listBox.DataSource = ItemsFilter.FilterByMember(m_Bridge.m_Friends, selectedMember);
-            }
-            if (controlName == "VideosDataSection")
-            {
-                this.listBox.DataSource = ItemsFilter.FilterByMember(m_Bridge.m_Videos, selectedMember);
-            }
-            if (controlName == "GalleryDataSection")
-            {
-                if(selectedMember == "ToString")
-                {
-                    this.listBox.DisplayMember = "ToString";
-                }
-                this.listBox.DataSource = ItemsFilter.FilterByMember(m_Bridge.m_Photos, selectedMember);
-            }
+            filterByMember(this.Name);
         }
 
         
@@ -167,44 +144,35 @@ namespace BasicFacebookFeatures
            
         }
 
+        private void filterByMember(string i_ControlName)
+        {
+            string selectedMember = this.comboBoxFilter.SelectedItem.ToString().Replace(" ", "");
+            this.listBox.DataSource = null; 
+            Type dataType = ControlTypeMappings.s_ControlTypeMappings[i_ControlName];
+            MethodInfo factoryMethod = typeof(FilterFactory).GetMethod("FilterByMember").MakeGenericMethod(dataType);
+            var dataSource = factoryMethod.Invoke(null, new object[] { selectedMember, m_Bridge });
+            if (i_ControlName == "PostsDataSection" && selectedMember == "CreatedTime")
+            {
+                this.listBox.DisplayMember = selectedMember; 
+            }
+            else if (i_ControlName == "GalleryDataSection" && selectedMember == "ToString")
+            {
+                this.listBox.DisplayMember = "ToString";
+            }
+            this.listBox.DataSource = dataSource;
+        }
+
+
         private void buttonFilter_Click(object sender, EventArgs e)
         {
             if(this.comboBoxFilter.SelectedItem != null && !string.IsNullOrEmpty(this.textBoxFilter.Text))
             {
                 String propertyName = this.comboBoxFilter.SelectedItem.ToString().Replace(" ", "");
-                string linkSearchName = this.Name;
-                try
-                {
-                    if (linkSearchName == "PostsDataSection")
-                    {
-                        if (propertyName == "Desecription")
-                        {
-                            propertyName = "ToString";
-                        }
-                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Posts, propertyName, textBoxFilter.Text);
-                    }
-                    if (linkSearchName == "FriendsDataSection")
-                    {
-                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Friends, propertyName, textBoxFilter.Text);
-                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Friends, propertyName, textBoxFilter.Text);
-                    }
-                    if (linkSearchName == "VideosDataSection")
-                    {
-                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Videos, propertyName, textBoxFilter.Text);
-                    }
-                    if (linkSearchName == "GalleryDataSection")
-                    {
-                        if (propertyName == "Description")
-                        {
-                            propertyName = "Name";
-                        }
-                        this.listBox.DataSource = ItemsFilter.FilterByProperty(m_Bridge.m_Photos, propertyName, textBoxFilter.Text);
-                    }
-                }
-                catch (Exception ex) 
-                {
-                    MessageBox.Show(ex.Message);
-                }
+                string i_ControlName = this.Name;
+                Type dataType = ControlTypeMappings.s_ControlTypeMappings[i_ControlName];
+                MethodInfo factoryMethod = typeof(FilterFactory).GetMethod("FilterByProperty").MakeGenericMethod(dataType);
+                var dataSource = factoryMethod.Invoke(null, new object[] { propertyName, textBoxFilter.Text, m_Bridge, i_ControlName });
+                this.listBox.DataSource = dataSource;
             }
         }
     }

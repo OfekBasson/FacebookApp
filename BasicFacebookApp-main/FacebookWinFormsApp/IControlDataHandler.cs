@@ -12,9 +12,4 @@ namespace BasicFacebookFeatures
         List<T> GetData(UIBridge io_bridge);
         List<string> GetFilterOptions();
     }
-
-    //public interface IControlDataHandler<T> : IControlDataHandler
-    //{
-    //    new List<T> GetData(UIBridge bridge);
-    //}
 }
