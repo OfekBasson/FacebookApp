@@ -9,6 +9,7 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
 using System.Runtime.Remoting.Messaging;
+using System.Threading;
 
 namespace BasicFacebookFeatures
 {
@@ -45,14 +46,25 @@ namespace BasicFacebookFeatures
             MessageBox.Show($"Error occured, please try again or call support 052538164, and add also 8.\nError message: {i_ErrorMessage}");
         }
 
+
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            User loggedInUser = m_Bridge.LogIn(m_AppId);
-            if (loggedInUser != null)
+            Thread loginThread = new Thread(() =>
             {
-                updateFormOnLogin(loggedInUser);
-            }
+                User loggedInUser = m_Bridge.LogIn(m_AppId);
+
+                if (loggedInUser != null)
+                {
+                    this.Invoke(new Action(() =>
+                    {
+                        updateFormOnLogin(loggedInUser);
+                    }));
+                }
+            });
+
+            loginThread.Start(); 
         }
+
 
         private void updateFormOnLogin(User i_LoggedInUser)
         {
@@ -194,7 +206,7 @@ namespace BasicFacebookFeatures
 
         private void saveDraft()
         {
-            Console.WriteLine("on posts: " + this.richTextBoxPosts.Text);
+            //Console.WriteLine("on posts: " + this.richTextBoxPosts.Text);
             m_Bridge.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
         }
 

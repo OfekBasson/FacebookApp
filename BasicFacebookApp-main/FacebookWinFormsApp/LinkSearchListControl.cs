@@ -1,14 +1,9 @@
-﻿using System;
+﻿using FacebookWrapper.ObjectModel;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using System.Threading;
 using System.Windows.Forms;
-using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
@@ -17,6 +12,7 @@ namespace BasicFacebookFeatures
         public UIBridge m_Bridge { get; set; }
         private bool m_IsDataDisplayedInListBox { get; set; } = false;
         private FormMain m_FormMain;
+        private dynamic m_DataHandler;
         public string m_LinkText
 
         {
@@ -40,20 +36,41 @@ namespace BasicFacebookFeatures
             {
                 if (m_Bridge.m_LoggedInUser != null)
                 {
-                    insertDataToListBox(this.Name);
-                    insertDataToComboBoxFilter(this.Name);
-                    handleDataInsertionToListBox();
+                    InitializeHandler(this.Name);
+                    if (m_DataHandler != null)
+                    {
+                        listBox.DataSource = m_DataHandler.GetData(m_Bridge);
+                        PopulateComboBoxWithFilters(m_DataHandler.GetFilterOptions());
+                        handleDataInsertionToListBox();
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException($"Could not initialize handler for {this.Name}");
+                    }
                 }
                 else
                 {
                     MessageBox.Show("Please log in to display information");
                 }
             }
-            else
-            {
-                HideDataFromListBox();
-            }
         }
+
+        public void InitializeHandler(string i_ControlName)
+        {
+            Type dataType = ControlDataHandlerFactory.s_ControlTypeMappings[i_ControlName];
+            MethodInfo factoryMethod = typeof(ControlDataHandlerFactory)
+                .GetMethod("CreateHandler")
+                ?.MakeGenericMethod(dataType);
+
+            m_DataHandler = factoryMethod?.Invoke(null, new object[] { i_ControlName });
+        }
+
+        private void PopulateComboBoxWithFilters(List<string> filters)
+        {
+            comboBoxFilter.Items.Clear();
+            comboBoxFilter.Items.AddRange(filters.ToArray());
+        }
+
         public void HideDataFromListBox()
         {
             this.listBox.DataSource = null;
@@ -74,62 +91,11 @@ namespace BasicFacebookFeatures
             }
         }
 
-        private void insertDataToListBox(string i_ControlName)
-        {
-            if (i_ControlName == "PostsDataSection")
-            {
-                this.listBox.DataSource = m_Bridge.m_Posts;
-            }
-            if (i_ControlName == "FriendsDataSection")
-            {
-                this.listBox.DataSource = m_Bridge.m_Friends;            
-            }
-            if (i_ControlName == "VideosDataSection")
-            {
-                this.listBox.DataSource = m_Bridge.m_Videos;
-            }
-            if (i_ControlName == "GalleryDataSection")
-            {
-                this.listBox.DataSource = m_Bridge.m_Photos;
-            }
-        }
-
-        private void insertDataToComboBoxFilter(string i_ControlName)
-        {
-            if (this.comboBoxFilter.Items.Count == 0)
-            {
-                if (i_ControlName == "PostsDataSection")
-                {
-                    this.comboBoxFilter.Items.Add("Name");
-                    this.comboBoxFilter.Items.Add("Created Time");
-                    this.comboBoxFilter.Items.Add("Place");
-                    this.comboBoxFilter.Items.Add("Description");
-                }
-                if (i_ControlName == "FriendsDataSection")
-                {
-                    this.comboBoxFilter.Items.Add("Name");
-                    this.comboBoxFilter.Items.Add("Location");
-                    this.comboBoxFilter.Items.Add("Email");
-                }
-                if (i_ControlName == "VideosDataSection")
-                {
-                    this.comboBoxFilter.Items.Add("Name");
-                    this.comboBoxFilter.Items.Add("Created Time");
-                    this.comboBoxFilter.Items.Add("Location");
-                }
-                if (i_ControlName == "GalleryDataSection")
-                {
-                    this.comboBoxFilter.Items.Add("To String");
-                    this.comboBoxFilter.Items.Add("Location");
-                    this.comboBoxFilter.Items.Add("Description");
-                }
-            }
-        }
-
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!m_IsDataDisplayedInListBox || m_Bridge.m_LoggedInUser == null)
             {
+
                 return;
             }
             genericListBox_SelectedIndexChanged(sender, e);
@@ -140,10 +106,11 @@ namespace BasicFacebookFeatures
             if (sender is ListBox listBox && listBox.SelectedItem != null)
             {
                 var selectedItem = listBox.SelectedItem;
-                var pictureUrlProperty = selectedItem.GetType() == typeof(FacebookWrapper.ObjectModel.Photo) ?
+                Console.WriteLine(selectedItem.GetType().ToString());
+                var pictureUrlProperty = selectedItem.GetType() == typeof(Photo) ?
                         selectedItem.GetType().GetProperty("PictureAlbumURL") :
                         selectedItem.GetType().GetProperty("PictureURL");
-
+                Console.WriteLine(pictureUrlProperty.ToString());
                 if (pictureUrlProperty != null)
                 {
                     string pictureUrl = pictureUrlProperty.GetValue(selectedItem) as string;

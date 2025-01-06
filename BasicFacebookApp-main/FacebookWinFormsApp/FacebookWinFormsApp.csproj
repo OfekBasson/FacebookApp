@@ -77,11 +77,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ControlDataHandlerFactory.cs" />
     <Compile Include="DraftSManager.cs" />
+    <Compile Include="FriendsDataHandler.cs" />
+    <Compile Include="GalleryDataHandler.cs" />
+    <Compile Include="IControlDataHandler.cs" />
     <Compile Include="ItemsFilter.cs" />
     <Compile Include="FacebookAppExceptions\DataCollectionInformationException.cs" />
     <Compile Include="FacebookAppExceptions\LoginException .cs" />
     <Compile Include="PostDraft.cs" />
+    <Compile Include="PostsDataHandler.cs" />
     <Compile Include="UIBridge.cs" />
     <Compile Include="FacebookUserManager.cs" />
     <Compile Include="FormMain.cs">
@@ -98,6 +103,7 @@
     <Compile Include="LinkSearchListControl.Designer.cs">
       <DependentUpon>LinkSearchListControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="VideosDataHandler.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

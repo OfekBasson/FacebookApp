@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
+using System.Threading;
 
 namespace BasicFacebookFeatures
 {
     public class UIBridge
     {
-        private FacebooktUserManager m_UserManager;
-        private DraftSManager m_DraftManager;
+        private readonly FacebooktUserManager m_UserManager;
+        private readonly DraftSManager m_DraftManager;
         public User m_LoggedInUser { get; set; }
         public List<Post> m_Posts { get; set; }
         public List<Video> m_Videos { get; set; }
@@ -41,13 +42,57 @@ namespace BasicFacebookFeatures
             }
             return m_LoggedInUser;
         }
+        //public User LogIn(string i_AppId)
+        //{
+        //    try
+        //    {
+        //        Thread loginThread = new Thread(() =>
+        //        {
+        //            m_LoggedInUser = m_UserManager.EnsureLoggedIn(i_AppId);
+        //        });
+
+        //        // Start the login thread
+        //        loginThread.Start();
+
+        //        // Wait for the login thread to complete
+        //        loginThread.Join();
+
+        //        // Proceed to save collections after login is complete
+        //        saveAllFacebookCollectionsAsListsToBridge();
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        OnErrorOccured(ex.Message);
+        //    }
+
+        //    return m_LoggedInUser;
+        //}
+
 
         private void saveAllFacebookCollectionsAsListsToBridge()
         {
-            saveFacebookCollectionAsListToBridge("post");
-            saveFacebookCollectionAsListToBridge("video");
-            saveFacebookCollectionAsListToBridge("friend");
-            saveFacebookCollectionAsListToBridge("photo");
+            //saveFacebookCollectionAsListToBridge("post");
+            //saveFacebookCollectionAsListToBridge("video");
+            //saveFacebookCollectionAsListToBridge("friend");
+            //saveFacebookCollectionAsListToBridge("photo");
+            
+            saveFacebookCollectionToBridge<Post>("post", data => m_Posts = data);
+            saveFacebookCollectionToBridge<Video>("video", data => m_Videos = data);
+            saveFacebookCollectionToBridge<User>("friend", data => m_Friends = data);
+            saveFacebookCollectionToBridge<Photo>("photo", data => m_Photos = data);
+            
+        }
+        private void saveFacebookCollectionToBridge<T>(string collectionType, Action<List<T>> assignCollection)
+        {
+            object collection = m_UserManager.GetDataCollectionByType(collectionType);
+            if (collection is FacebookObjectCollection<T> typedCollection)
+            {
+                new Thread(() => assignCollection(typedCollection.ToList())).Start();
+            }
+            else
+            {
+                throw new InvalidOperationException($"Unsupported collection type: {collectionType}");
+            }
         }
 
         protected virtual void OnErrorOccured(string i_ErrorMessage)
@@ -70,7 +115,7 @@ namespace BasicFacebookFeatures
         private void saveFacebookCollectionAsListToBridge(string i_CollectionType)
         {
             object collection = m_UserManager.GetDataCollectionByType(i_CollectionType);
-            saveCollectionToBridge((dynamic)collection, i_CollectionType);
+            new Thread(() => saveCollectionToBridge((dynamic)collection, i_CollectionType)).Start();
         }
 
         private void saveCollectionToBridge(dynamic collection, string i_CollectionType)

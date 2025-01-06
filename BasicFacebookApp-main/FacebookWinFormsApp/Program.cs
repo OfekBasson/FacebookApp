@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
+using CefSharp.WinForms;
+using CefSharp;
 using FacebookWrapper;
 
 namespace BasicFacebookFeatures
@@ -18,7 +20,17 @@ namespace BasicFacebookFeatures
             FacebookService.s_UseForamttedToStrings = true;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FormMain());
+            // Initialize CEF on the UI thread
+            Cef.Initialize(new CefSettings());
+
+            FormMain mainForm = new FormMain();
+
+            // Attach shutdown logic to the FormClosed event
+            mainForm.FormClosed += (sender, args) =>
+            {
+                Cef.Shutdown();
+            };
+            Application.Run(mainForm);
         }
     }
 }
