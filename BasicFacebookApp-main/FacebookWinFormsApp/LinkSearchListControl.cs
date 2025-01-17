@@ -10,7 +10,7 @@ namespace BasicFacebookFeatures
 {
     public partial class LinkSearchListControl : UserControl
     {
-        public UIBridge m_Bridge { get; set; }
+        public Facade m_Facade { get; set; }
         private bool m_IsDataDisplayedInListBox { get; set; } = false;
         private FormMain m_FormMain;
         private dynamic m_DataHandler;
@@ -35,12 +35,12 @@ namespace BasicFacebookFeatures
         {
             if (!m_IsDataDisplayedInListBox)
             {
-                if (m_Bridge.m_LoggedInUser != null)
+                if (m_Facade.m_LoggedInUser != null)
                 {
                     InitializeHandler(this.Name);
                     if (m_DataHandler != null)
                     {
-                        listBox.DataSource = m_DataHandler.GetData(m_Bridge);
+                        listBox.DataSource = m_DataHandler.GetData(m_Facade);
                         PopulateComboBoxWithFilters(m_DataHandler.GetFilterOptions());
                         handleDataInsertionToListBox();
                     }
@@ -99,7 +99,7 @@ namespace BasicFacebookFeatures
 
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (!m_IsDataDisplayedInListBox || m_Bridge.m_LoggedInUser == null)
+            if (!m_IsDataDisplayedInListBox || m_Facade.m_LoggedInUser == null)
             {
 
                 return;
@@ -150,7 +150,7 @@ namespace BasicFacebookFeatures
             this.listBox.DataSource = null; 
             Type dataType = ControlTypeMappings.s_ControlTypeMappings[i_ControlName];
             MethodInfo factoryMethod = typeof(FilterFactory).GetMethod("FilterByMember").MakeGenericMethod(dataType);
-            var dataSource = factoryMethod.Invoke(null, new object[] { selectedMember, m_Bridge });
+            var dataSource = factoryMethod.Invoke(null, new object[] { selectedMember, m_Facade });
             if (i_ControlName == "PostsDataSection" && selectedMember == "CreatedTime")
             {
                 this.listBox.DisplayMember = selectedMember; 
@@ -171,7 +171,7 @@ namespace BasicFacebookFeatures
                 string i_ControlName = this.Name;
                 Type dataType = ControlTypeMappings.s_ControlTypeMappings[i_ControlName];
                 MethodInfo factoryMethod = typeof(FilterFactory).GetMethod("FilterByProperty").MakeGenericMethod(dataType);
-                var dataSource = factoryMethod.Invoke(null, new object[] { propertyName, textBoxFilter.Text, m_Bridge, i_ControlName });
+                var dataSource = factoryMethod.Invoke(null, new object[] { propertyName, textBoxFilter.Text, m_Facade, i_ControlName });
                 this.listBox.DataSource = dataSource;
             }
         }

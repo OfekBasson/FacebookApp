@@ -235,7 +235,7 @@
             // GalleryDataSection
             // 
             this.GalleryDataSection.Location = new System.Drawing.Point(982, 27);
-            this.GalleryDataSection.m_Bridge = null;
+            this.GalleryDataSection.m_Facade = null;
             this.GalleryDataSection.m_LinkText = "Show Gallery";
             this.GalleryDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.GalleryDataSection.Name = "GalleryDataSection";
@@ -246,7 +246,7 @@
             // PostsDataSection
             // 
             this.PostsDataSection.Location = new System.Drawing.Point(240, 24);
-            this.PostsDataSection.m_Bridge = null;
+            this.PostsDataSection.m_Facade = null;
             this.PostsDataSection.m_LinkText = "Show Posts";
             this.PostsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.PostsDataSection.Name = "PostsDataSection";
@@ -256,7 +256,7 @@
             // FriendsDataSection
             // 
             this.FriendsDataSection.Location = new System.Drawing.Point(487, 24);
-            this.FriendsDataSection.m_Bridge = null;
+            this.FriendsDataSection.m_Facade = null;
             this.FriendsDataSection.m_LinkText = "Show Friends";
             this.FriendsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.FriendsDataSection.Name = "FriendsDataSection";
@@ -267,7 +267,7 @@
             // VideosDataSection
             // 
             this.VideosDataSection.Location = new System.Drawing.Point(734, 27);
-            this.VideosDataSection.m_Bridge = null;
+            this.VideosDataSection.m_Facade = null;
             this.VideosDataSection.m_LinkText = "Show Videos";
             this.VideosDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.VideosDataSection.Name = "VideosDataSection";

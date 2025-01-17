@@ -9,9 +9,9 @@ namespace BasicFacebookFeatures
 {
     public class FriendsDataHandler : IControlDataHandler<User>
     {
-        public List<User> GetData(UIBridge i_Bridge)
+        public List<User> GetData(Facade i_Facade)
         {
-            return i_Bridge.GetFriends();
+            return i_Facade.GetFriends();
         }
         public List<string> GetFilterOptions()
         {

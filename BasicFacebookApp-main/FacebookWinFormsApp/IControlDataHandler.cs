@@ -9,7 +9,7 @@ namespace BasicFacebookFeatures
 {
     public interface IControlDataHandler<T>
     {
-        List<T> GetData(UIBridge i_Bridge);
+        List<T> GetData(Facade i_Facade);
         List<string> GetFilterOptions();
     }
 }

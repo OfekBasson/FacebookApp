@@ -9,9 +9,9 @@ namespace BasicFacebookFeatures
 {
     public class GalleryDataHandler : IControlDataHandler<Photo>
     {
-        public List<Photo> GetData(UIBridge i_Bridge)
+        public List<Photo> GetData(Facade i_Facade)
         {
-            return i_Bridge.GetPhotos();
+            return i_Facade.GetPhotos();
         }
         public List<string> GetFilterOptions()
         {

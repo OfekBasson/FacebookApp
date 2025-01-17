@@ -9,9 +9,9 @@ namespace BasicFacebookFeatures
 {
     public class VideosDataHandler : IControlDataHandler<Video>
     {
-        public List<Video> GetData(UIBridge i_Bridge)
+        public List<Video> GetData(Facade i_Facade)
         {
-            return i_Bridge.GetVideos();
+            return i_Facade.GetVideos();
         }
         public List<string> GetFilterOptions()
         {

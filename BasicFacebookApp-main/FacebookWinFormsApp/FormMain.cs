@@ -16,7 +16,7 @@ namespace BasicFacebookFeatures
     internal partial class FormMain : Form
     {
         private string m_AppId = "917683610037169";
-        private UIBridge m_Bridge { get; set; }
+        private Facade m_Facade { get; set; }
         
         public PictureBox m_PictureBoxLeft()
         {
@@ -26,15 +26,15 @@ namespace BasicFacebookFeatures
         public FormMain()
         {
             InitializeComponent();
-            m_Bridge = new UIBridge();
+            m_Facade = new Facade();
             this.Name = "FormMain"; // Explicitly set the form's name for linksearchcontrol
             foreach (LinkSearchListControl control in userDataGroupBox.Controls.OfType<LinkSearchListControl>())
             {
-                control.m_Bridge = m_Bridge;
+                control.m_Facade = m_Facade;
             }
 
-            m_Bridge.ErrorOccured += bridge_ErrorOccured;
-            postDraftBindingSource.DataSource = m_Bridge.GetDrafts();
+            m_Facade.ErrorOccured += bridge_ErrorOccured;
+            postDraftBindingSource.DataSource = m_Facade.GetDrafts();
             showOrHideControlers(false);
             this.richTextBoxPosts.Text = "Write Here...";
             FacebookService.s_CollectionLimit = 25;
@@ -51,7 +51,7 @@ namespace BasicFacebookFeatures
         {
             Thread loginThread = new Thread(() =>
             {
-                User loggedInUser = m_Bridge.LogIn(m_AppId);
+                User loggedInUser = m_Facade.LogIn(m_AppId);
 
                 if (loggedInUser != null)
                 {
@@ -69,7 +69,7 @@ namespace BasicFacebookFeatures
         private void updateFormOnLogin(User i_LoggedInUser)
         {
             updateButtonsOnLogin();
-            pictureBoxProfile.ImageLocation = m_Bridge.m_LoggedInUser.PictureNormalURL;
+            pictureBoxProfile.ImageLocation = m_Facade.m_LoggedInUser.PictureNormalURL;
             showOrHideControlers(true);
             updateUserSummaryLabel(i_LoggedInUser);
         }
@@ -101,12 +101,12 @@ namespace BasicFacebookFeatures
             buttonLogout.Enabled = true;
             buttonLogin.Enabled = false;
             buttonLogin.BackColor = Color.LightGreen;
-            buttonLogin.Text = $"Logged in as {m_Bridge.m_LoggedInUser.Name}";
+            buttonLogin.Text = $"Logged in as {m_Facade.m_LoggedInUser.Name}";
         }
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            m_Bridge.Logout();
+            m_Facade.Logout();
             UpdateFormOnLogout();
         }
 
@@ -120,7 +120,7 @@ namespace BasicFacebookFeatures
             }
 
             showOrHideControlers(false);
-            m_Bridge.SaveDraftsToFile();
+            m_Facade.SaveDraftsToFile();
         }
 
         private void updateButtonsOnLogout()
@@ -177,7 +177,7 @@ namespace BasicFacebookFeatures
         private void PostStatus()
         {
             MessageBox.Show("Status: " + this.richTextBoxPosts.Text);
-            m_Bridge.PostStatus(this.richTextBoxPosts.Text);
+            m_Facade.PostStatus(this.richTextBoxPosts.Text);
             this.richTextBoxPosts.Text = "Write Here...";
         }
 
@@ -203,12 +203,12 @@ namespace BasicFacebookFeatures
 
         private void saveDraft()
         {
-            m_Bridge.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
+            m_Facade.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
         }
 
         private void buttonClearDrafts_Click(object sender, EventArgs e)
         {
-            m_Bridge.ClearDrafts();
+            m_Facade.ClearDrafts();
         }
     }
 }

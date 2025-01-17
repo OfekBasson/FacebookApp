@@ -12,9 +12,9 @@ namespace BasicFacebookFeatures
 {
     public class PostsDataHandler : IControlDataHandler<Post>
     {
-        public List<Post> GetData(UIBridge i_Bridge)
+        public List<Post> GetData(Facade i_Facade)
         {
-            return i_Bridge.GetPosts();  
+            return i_Facade.GetPosts();  
         }
 
         public List<string> GetFilterOptions()

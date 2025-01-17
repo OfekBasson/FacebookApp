@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace BasicFacebookFeatures
 {
-    public class UIBridge
+    public class Facade
     {
         private readonly FacebooktUserManager m_UserManager;
         private readonly DraftSManager m_DraftManager;
@@ -21,7 +21,7 @@ namespace BasicFacebookFeatures
         private List<Photo> m_Photos;
         public event Action<string> ErrorOccured;
 
-        public UIBridge()
+        public Facade()
         {
             m_UserManager = new FacebooktUserManager();
             m_DraftManager = new DraftSManager();
