@@ -15,6 +15,7 @@ namespace BasicFacebookFeatures
     internal class FacebooktUserManager
     {
         private User m_LoggedInUser { get; set; }
+        
         public User EnsureLoggedIn(string i_AppId)
         {
             if (!IsLoggedIn())
@@ -88,7 +89,8 @@ namespace BasicFacebookFeatures
                 }
                 return photoCollection;
             }
-            else {
+            else
+            {
                 throw new DataCollectionInformationException($"Collection type {i_CollectionType} isn't recognized.");
             }
         }

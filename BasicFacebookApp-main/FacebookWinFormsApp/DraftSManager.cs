@@ -49,6 +49,19 @@ namespace BasicFacebookFeatures
             return m_Drafts;
         }
 
+        public BindingList<PostDraft> GetDrafts()
+        {
+            return m_Drafts;
+        }
+
+        public void AddDraft(string i_TimeOfCreation, string i_Content)
+        {
+            PostDraft post = new PostDraft();
+            post.m_TimeOfCreation = i_TimeOfCreation;
+            post.m_Content = i_Content;
+            m_Drafts.Add(post);
+        }
+
         public void ClearDrafts()
         {
             m_Drafts.Clear();

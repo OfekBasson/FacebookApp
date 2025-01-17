@@ -34,7 +34,7 @@ namespace BasicFacebookFeatures
             }
 
             m_Bridge.ErrorOccured += bridge_ErrorOccured;
-            postDraftBindingSource.DataSource = m_Bridge.m_Drafts;
+            postDraftBindingSource.DataSource = m_Bridge.GetDrafts();
             showOrHideControlers(false);
             this.richTextBoxPosts.Text = "Write Here...";
             FacebookService.s_CollectionLimit = 25;
@@ -130,13 +130,10 @@ namespace BasicFacebookFeatures
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
         }
-
-
         private void tabPage1_Click(object sender, EventArgs e)
         {
 
         }
-
 
         private void FormMain_Load(object sender, EventArgs e)
         {
@@ -206,7 +203,6 @@ namespace BasicFacebookFeatures
 
         private void saveDraft()
         {
-            //Console.WriteLine("on posts: " + this.richTextBoxPosts.Text);
             m_Bridge.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
         }
 

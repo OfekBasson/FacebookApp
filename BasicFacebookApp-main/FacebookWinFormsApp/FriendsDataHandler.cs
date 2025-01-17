@@ -11,7 +11,7 @@ namespace BasicFacebookFeatures
     {
         public List<User> GetData(UIBridge i_Bridge)
         {
-            return i_Bridge.m_Friends;
+            return i_Bridge.GetFriends();
         }
         public List<string> GetFilterOptions()
         {

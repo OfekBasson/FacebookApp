@@ -145,7 +145,7 @@
             // 
             // m_TitleTextBox
             // 
-            this.m_TitleTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.postDraftBindingSource, "m_Title", true));
+            this.m_TitleTextBox.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.postDraftBindingSource, "m_TimeOfCreation", true));
             this.m_TitleTextBox.Location = new System.Drawing.Point(94, 13);
             this.m_TitleTextBox.Name = "m_TitleTextBox";
             this.m_TitleTextBox.Size = new System.Drawing.Size(313, 32);
@@ -154,7 +154,7 @@
             // listBoxDrafts
             // 
             this.listBoxDrafts.DataSource = this.postDraftBindingSource;
-            this.listBoxDrafts.DisplayMember = "m_Title";
+            this.listBoxDrafts.DisplayMember = "m_TimeOfCreation";
             this.listBoxDrafts.FormattingEnabled = true;
             this.listBoxDrafts.ItemHeight = 26;
             this.listBoxDrafts.Location = new System.Drawing.Point(843, 628);

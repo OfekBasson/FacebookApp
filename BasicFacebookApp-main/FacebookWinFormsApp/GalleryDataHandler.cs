@@ -11,7 +11,7 @@ namespace BasicFacebookFeatures
     {
         public List<Photo> GetData(UIBridge i_Bridge)
         {
-            return i_Bridge.m_Photos;
+            return i_Bridge.GetPhotos();
         }
         public List<string> GetFilterOptions()
         {

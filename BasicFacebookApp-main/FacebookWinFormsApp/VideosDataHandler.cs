@@ -11,7 +11,7 @@ namespace BasicFacebookFeatures
     {
         public List<Video> GetData(UIBridge i_Bridge)
         {
-            return i_Bridge.m_Videos;
+            return i_Bridge.GetVideos();
         }
         public List<string> GetFilterOptions()
         {

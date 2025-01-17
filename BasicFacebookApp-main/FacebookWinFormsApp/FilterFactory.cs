@@ -16,19 +16,23 @@ namespace BasicFacebookFeatures
             dynamic filteredList = null;
             if (typeof(T) == typeof(Post))
             {
-                filteredList = ItemsFilter.FilterByMember(i_Bridge.m_Posts, selectedMember).Cast<T>().ToList();
+                List<Post> posts = i_Bridge.GetPosts();
+                filteredList = ItemsFilter.FilterByMember(posts, selectedMember).Cast<T>().ToList();
             }
             else if (typeof(T) == typeof(User))
             {
-                filteredList = ItemsFilter.FilterByMember(i_Bridge.m_Friends, selectedMember).Cast<T>().ToList();
+                List<User> friends = i_Bridge.GetFriends();
+                filteredList = ItemsFilter.FilterByMember(friends, selectedMember).Cast<T>().ToList();
             }
             else if (typeof(T) == typeof(Video))
             {
-                filteredList = ItemsFilter.FilterByMember(i_Bridge.m_Videos, selectedMember).Cast<T>().ToList();
+                List<Video> videos = i_Bridge.GetVideos();
+                filteredList = ItemsFilter.FilterByMember(videos, selectedMember).Cast<T>().ToList();
             }
             else if (typeof(T) == typeof(Photo))
             {
-                filteredList = ItemsFilter.FilterByMember(i_Bridge.m_Photos, selectedMember).Cast<T>().ToList();
+                List <Photo> photos = i_Bridge.GetPhotos();
+                filteredList = ItemsFilter.FilterByMember(photos, selectedMember).Cast<T>().ToList();
             }
             else
             {
@@ -50,16 +54,20 @@ namespace BasicFacebookFeatures
                     {
                         i_PropertyName = "ToString";
                     }
-                    filteredList = ItemsFilter.FilterByProperty(i_Bridge.m_Posts, i_PropertyName, i_FilterValue);
+
+                    List<Post> posts = i_Bridge.GetPosts();
+                    filteredList = ItemsFilter.FilterByProperty(posts, i_PropertyName, i_FilterValue);
                 }
                 if (i_ControlName == "FriendsDataSection")
                 {
-                   filteredList = ItemsFilter.FilterByProperty(i_Bridge.m_Friends, i_PropertyName, i_FilterValue);
+                   List<User> friends = i_Bridge.GetFriends();
+                   filteredList = ItemsFilter.FilterByProperty(friends, i_PropertyName, i_FilterValue);
                     
                 }
                 if (i_ControlName == "VideosDataSection")
                 {
-                    filteredList = ItemsFilter.FilterByProperty(i_Bridge.m_Videos, i_PropertyName, i_FilterValue);
+                    List<Video> videos = i_Bridge.GetVideos();
+                    filteredList = ItemsFilter.FilterByProperty(videos, i_PropertyName, i_FilterValue);
                 }
                 if (i_ControlName == "GalleryDataSection")
                 {
@@ -67,7 +75,9 @@ namespace BasicFacebookFeatures
                     {
                         i_PropertyName = "Name";
                     }
-                    filteredList = ItemsFilter.FilterByProperty(i_Bridge.m_Photos, i_PropertyName, i_FilterValue);
+
+                    List<Photo> photos = i_Bridge.GetPhotos();
+                    filteredList = ItemsFilter.FilterByProperty(photos, i_PropertyName, i_FilterValue);
                 }
             }
             catch (Exception ex)
