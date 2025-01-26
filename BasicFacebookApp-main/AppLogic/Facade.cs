@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.ComponentModel;
 using FacebookWrapper.ObjectModel;
-using System.Threading;
-using FacebookWrapper;
-using static BasicFacebookFeatures.LogicLayerResult;
+using static AppLogic.HelperClasses.LogicLayerResult;
+using AppLogic.HelperClasses;
 
 namespace BasicFacebookFeatures
 {

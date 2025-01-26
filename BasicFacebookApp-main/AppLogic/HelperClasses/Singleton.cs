@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Reflection;
 
-namespace BasicFacebookFeatures
+namespace AppLogic.HelperClasses
 {
-    internal static class Singleton<T>
+    public static class Singleton<T>
         where T : class
     {
         private static T s_Instance = null;
@@ -29,10 +23,10 @@ namespace BasicFacebookFeatures
                             Type typeOfT = typeof(T);
 
                             ConstructorInfo constructor = typeOfT.GetConstructor(
-                                BindingFlags.Instance | BindingFlags.NonPublic, 
-                                null,  
-                                Type.EmptyTypes,  
-                                null);  
+                                BindingFlags.Instance | BindingFlags.NonPublic,
+                                null,
+                                Type.EmptyTypes,
+                                null);
 
                             if (constructor != null)
                             {

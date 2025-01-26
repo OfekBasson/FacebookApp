@@ -1,4 +1,6 @@
-﻿namespace BasicFacebookFeatures
+﻿using AppLogic.HelperClasses;
+
+namespace BasicFacebookFeatures
 {
     partial class FormMain
     {
@@ -140,8 +142,7 @@
             // 
             // postDraftBindingSource
             // 
-            this.postDraftBindingSource.DataSource = typeof(BasicFacebookFeatures.PostDraft);
-            this.postDraftBindingSource.CurrentChanged += new System.EventHandler(this.postDraftBindingSource_CurrentChanged);
+            this.postDraftBindingSource.DataSource = typeof(PostDraft);
             // 
             // m_TitleTextBox
             // 

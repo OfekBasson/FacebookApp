@@ -1,9 +1,8 @@
-﻿using CefSharp.DevTools.Accessibility;
+﻿using AppLogic.HelperClasses;
 using FacebookWrapper.ObjectModel;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace BasicFacebookFeatures

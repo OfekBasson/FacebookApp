@@ -77,38 +77,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ControlDataHandlerFactory.cs" />
+    <Compile Include="DataHandlers\ControlDataHandlerFactory.cs" />
     <Compile Include="ControlTypeMappings.cs" />
-    <Compile Include="DraftSManager.cs" />
-    <Compile Include="FilterFactory.cs" />
-    <Compile Include="FriendsDataHandler.cs" />
-    <Compile Include="GalleryDataHandler.cs" />
-    <Compile Include="IControlDataHandler.cs" />
-    <Compile Include="ItemsFilter.cs" />
+    <Compile Include="Filtering\FilterFactory.cs" />
+    <Compile Include="DataHandlers\FriendsDataHandler.cs" />
+    <Compile Include="DataHandlers\GalleryDataHandler.cs" />
+    <Compile Include="DataHandlers\IControlDataHandler.cs" />
+    <Compile Include="Filtering\ItemsFilter.cs" />
     <Compile Include="FacebookAppExceptions\DataCollectionInformationException.cs" />
     <Compile Include="FacebookAppExceptions\LoginException .cs" />
-    <Compile Include="LogicLayerResult.cs" />
-    <Compile Include="PostDraft.cs" />
-    <Compile Include="PostsDataHandler.cs" />
-    <Compile Include="Facade.cs" />
-    <Compile Include="FacebookUserManager.cs" />
-    <Compile Include="FormMain.cs">
+    <Compile Include="DataHandlers\PostsDataHandler.cs" />
+    <Compile Include="UIComponents\FormMain.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormMain.Designer.cs">
+    <Compile Include="UIComponents\FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="LinkSearchListControl.cs">
+    <Compile Include="UIComponents\LinkSearchListControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="LinkSearchListControl.Designer.cs">
+    <Compile Include="UIComponents\LinkSearchListControl.Designer.cs">
       <DependentUpon>LinkSearchListControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="Singleton.cs" />
-    <Compile Include="VideosDataHandler.cs" />
-    <EmbeddedResource Include="FormMain.resx">
+    <Compile Include="DataHandlers\VideosDataHandler.cs" />
+    <EmbeddedResource Include="UIComponents\FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -121,7 +115,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="LinkSearchListControl.resx">
+    <EmbeddedResource Include="UIComponents\LinkSearchListControl.resx">
       <DependentUpon>LinkSearchListControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\DataSources\PostDraft.datasource" />
@@ -165,6 +159,11 @@
   <ItemGroup>
     <None Include="Facebook-Logo.jpg" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\AppLogic\AppLogic.csproj">
+      <Project>{5e852ea9-d404-4e75-8ccb-ade68ef360f3}</Project>
+      <Name>AppLogic</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

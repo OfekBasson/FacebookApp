@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
 using System.Threading;
+using AppLogic.HelperClasses;
 
 namespace BasicFacebookFeatures
 {
