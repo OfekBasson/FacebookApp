@@ -117,7 +117,6 @@
             this.tabPage1.Size = new System.Drawing.Size(1230, 736);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "tabPage1";
-            this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
             // panelDraft
             // 
@@ -142,6 +141,7 @@
             // postDraftBindingSource
             // 
             this.postDraftBindingSource.DataSource = typeof(BasicFacebookFeatures.PostDraft);
+            this.postDraftBindingSource.CurrentChanged += new System.EventHandler(this.postDraftBindingSource_CurrentChanged);
             // 
             // m_TitleTextBox
             // 
@@ -205,7 +205,6 @@
             this.richTextBoxPosts.Size = new System.Drawing.Size(377, 49);
             this.richTextBoxPosts.TabIndex = 60;
             this.richTextBoxPosts.Text = "Write Here...";
-            this.richTextBoxPosts.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // userDataGroupBox
             // 
@@ -221,7 +220,6 @@
             this.userDataGroupBox.TabIndex = 78;
             this.userDataGroupBox.TabStop = false;
             this.userDataGroupBox.Visible = false;
-            this.userDataGroupBox.Enter += new System.EventHandler(this.groupBox1_Enter);
             // 
             // UserSummaryLabel
             // 
@@ -230,23 +228,19 @@
             this.UserSummaryLabel.Name = "UserSummaryLabel";
             this.UserSummaryLabel.Size = new System.Drawing.Size(0, 26);
             this.UserSummaryLabel.TabIndex = 1;
-            this.UserSummaryLabel.Click += new System.EventHandler(this.label1_Click_1);
             // 
             // GalleryDataSection
             // 
             this.GalleryDataSection.Location = new System.Drawing.Point(982, 27);
-            this.GalleryDataSection.m_Facade = null;
             this.GalleryDataSection.m_LinkText = "Show Gallery";
             this.GalleryDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.GalleryDataSection.Name = "GalleryDataSection";
             this.GalleryDataSection.Size = new System.Drawing.Size(242, 209);
             this.GalleryDataSection.TabIndex = 50;
-            this.GalleryDataSection.Load += new System.EventHandler(this.GalleryDataSection_Load);
             // 
             // PostsDataSection
             // 
             this.PostsDataSection.Location = new System.Drawing.Point(240, 24);
-            this.PostsDataSection.m_Facade = null;
             this.PostsDataSection.m_LinkText = "Show Posts";
             this.PostsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.PostsDataSection.Name = "PostsDataSection";
@@ -256,24 +250,20 @@
             // FriendsDataSection
             // 
             this.FriendsDataSection.Location = new System.Drawing.Point(487, 24);
-            this.FriendsDataSection.m_Facade = null;
             this.FriendsDataSection.m_LinkText = "Show Friends";
             this.FriendsDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.FriendsDataSection.Name = "FriendsDataSection";
             this.FriendsDataSection.Size = new System.Drawing.Size(241, 209);
             this.FriendsDataSection.TabIndex = 30;
-            this.FriendsDataSection.Load += new System.EventHandler(this.FriendsDataSection_Load);
             // 
             // VideosDataSection
             // 
             this.VideosDataSection.Location = new System.Drawing.Point(734, 27);
-            this.VideosDataSection.m_Facade = null;
             this.VideosDataSection.m_LinkText = "Show Videos";
             this.VideosDataSection.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.VideosDataSection.Name = "VideosDataSection";
             this.VideosDataSection.Size = new System.Drawing.Size(242, 209);
             this.VideosDataSection.TabIndex = 40;
-            this.VideosDataSection.Load += new System.EventHandler(this.VideosDataSection_Load);
             // 
             // FacebookLogo
             // 
@@ -284,7 +274,6 @@
             this.FacebookLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.FacebookLogo.TabIndex = 80;
             this.FacebookLogo.TabStop = false;
-            this.FacebookLogo.Click += new System.EventHandler(this.FacebookLogo_Click);
             // 
             // panel1
             // 
@@ -327,7 +316,6 @@
             this.pictureBoxLeft.Size = new System.Drawing.Size(373, 210);
             this.pictureBoxLeft.TabIndex = 62;
             this.pictureBoxLeft.TabStop = false;
-            this.pictureBoxLeft.Click += new System.EventHandler(this.pictureBoxLeft_Click);
             // 
             // pictureBoxProfile
             // 
@@ -337,7 +325,6 @@
             this.pictureBoxProfile.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBoxProfile.TabIndex = 55;
             this.pictureBoxProfile.TabStop = false;
-            this.pictureBoxProfile.Click += new System.EventHandler(this.pictureBoxProfile_Click);
             // 
             // FormMain
             // 
@@ -354,7 +341,6 @@
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Facebook App - Design Patterns Course";
-            this.Load += new System.EventHandler(this.FormMain_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.panelDraft.ResumeLayout(false);

@@ -9,9 +9,9 @@ namespace BasicFacebookFeatures
 {
     public class GalleryDataHandler : IControlDataHandler<Photo>
     {
-        public List<Photo> GetData(Facade i_Facade)
+        public async Task<List<Photo>> RunDataTask()
         {
-            return i_Facade.GetPhotos();
+            return await Task.Run(() => (List<Photo>)Singleton<Facade>.Instance.GetPhotos().m_ResultData);
         }
         public List<string> GetFilterOptions()
         {

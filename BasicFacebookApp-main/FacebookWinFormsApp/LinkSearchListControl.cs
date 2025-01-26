@@ -10,7 +10,7 @@ namespace BasicFacebookFeatures
 {
     public partial class LinkSearchListControl : UserControl
     {
-        public Facade m_Facade { get; set; }
+        private Facade m_Facade { get; set; }
         private bool m_IsDataDisplayedInListBox { get; set; } = false;
         private FormMain m_FormMain;
         private dynamic m_DataHandler;
@@ -25,13 +25,11 @@ namespace BasicFacebookFeatures
         {
             InitializeComponent();
             m_LinkText = $"Show {Name.Replace("DataSection", "")}";
+            m_Facade = Singleton<Facade>.Instance;
         }
 
-        private void UserDataSection_Load(object sender, EventArgs e)
-        {
-        }
 
-        private void link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private async void link_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             if (!m_IsDataDisplayedInListBox)
             {
@@ -40,7 +38,7 @@ namespace BasicFacebookFeatures
                     InitializeHandler(this.Name);
                     if (m_DataHandler != null)
                     {
-                        listBox.DataSource = m_DataHandler.GetData(m_Facade);
+                        listBox.DataSource = await m_DataHandler.RunDataTask();
                         PopulateComboBoxWithFilters(m_DataHandler.GetFilterOptions());
                         handleDataInsertionToListBox();
                     }

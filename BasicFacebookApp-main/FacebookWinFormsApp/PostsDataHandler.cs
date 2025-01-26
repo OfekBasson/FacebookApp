@@ -12,9 +12,10 @@ namespace BasicFacebookFeatures
 {
     public class PostsDataHandler : IControlDataHandler<Post>
     {
-        public List<Post> GetData(Facade i_Facade)
+        public Task<List<Post>> RunDataTask()
         {
-            return i_Facade.GetPosts();  
+            // TODO: What happens where there is an exception in the facade? It gets the string...
+            return Task.Run(() => (List<Post>)Singleton<Facade>.Instance.GetPosts().m_ResultData);  
         }
 
         public List<string> GetFilterOptions()

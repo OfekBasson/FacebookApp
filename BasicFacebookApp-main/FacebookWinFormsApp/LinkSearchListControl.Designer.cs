@@ -102,7 +102,6 @@
             this.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.Name = "LinkSearchListControl";
             this.Size = new System.Drawing.Size(238, 202);
-            this.Load += new System.EventHandler(this.UserDataSection_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -111,7 +110,6 @@
         #endregion
 
         private System.Windows.Forms.LinkLabel link;
-        // TODO: Check if it's ok to define it like this and if I can use private "set"
         public System.Windows.Forms.ListBox listBox;
         private System.Windows.Forms.ComboBox comboBoxFilter;
         private System.Windows.Forms.TextBox textBoxFilter;

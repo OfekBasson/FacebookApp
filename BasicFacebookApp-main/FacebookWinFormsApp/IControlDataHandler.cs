@@ -1,4 +1,5 @@
 ﻿using System;
+using FacebookWrapper.ObjectModel;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ namespace BasicFacebookFeatures
 {
     public interface IControlDataHandler<T>
     {
-        List<T> GetData(Facade i_Facade);
+        Task<List<T>> RunDataTask();
         List<string> GetFilterOptions();
     }
 }

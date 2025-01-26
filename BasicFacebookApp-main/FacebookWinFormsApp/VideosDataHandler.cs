@@ -9,9 +9,9 @@ namespace BasicFacebookFeatures
 {
     public class VideosDataHandler : IControlDataHandler<Video>
     {
-        public List<Video> GetData(Facade i_Facade)
+        public async Task<List<Video>> RunDataTask()
         {
-            return i_Facade.GetVideos();
+            return await Task.Run(() => (List<Video>)Singleton<Facade>.Instance.GetVideos().m_ResultData);
         }
         public List<string> GetFilterOptions()
         {

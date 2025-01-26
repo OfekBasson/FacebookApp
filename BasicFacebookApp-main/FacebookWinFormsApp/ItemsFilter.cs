@@ -51,8 +51,7 @@ namespace BasicFacebookFeatures
                         value = property.GetValue(item) as string;
                         return value != null && value.ToString().Contains(i_FilterValue);
                     }
-                })
-                .ToList();
+                }).ToList();
         }
 
         private static List<T> filterByToString<T>(List<T> i_Items, string i_PropertyName, string i_FilterValue)

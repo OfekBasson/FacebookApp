@@ -9,9 +9,10 @@ namespace BasicFacebookFeatures
 {
     public class FriendsDataHandler : IControlDataHandler<User>
     {
-        public List<User> GetData(Facade i_Facade)
+        // TODO: Move those classes under the facade...
+        public async Task<List<User>> RunDataTask()
         {
-            return i_Facade.GetFriends();
+            return await Task.Run(() => (List<User>)Singleton<Facade>.Instance.GetFriends().m_ResultData);
         }
         public List<string> GetFilterOptions()
         {

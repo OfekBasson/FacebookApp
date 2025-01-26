@@ -87,6 +87,7 @@
     <Compile Include="ItemsFilter.cs" />
     <Compile Include="FacebookAppExceptions\DataCollectionInformationException.cs" />
     <Compile Include="FacebookAppExceptions\LoginException .cs" />
+    <Compile Include="LogicLayerResult.cs" />
     <Compile Include="PostDraft.cs" />
     <Compile Include="PostsDataHandler.cs" />
     <Compile Include="Facade.cs" />
@@ -105,6 +106,7 @@
     <Compile Include="LinkSearchListControl.Designer.cs">
       <DependentUpon>LinkSearchListControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="Singleton.cs" />
     <Compile Include="VideosDataHandler.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>

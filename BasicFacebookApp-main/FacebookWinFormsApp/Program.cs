@@ -16,7 +16,9 @@ namespace BasicFacebookFeatures
         [STAThread]
         static void Main()
         {
-            Clipboard.SetText("design.patterns20cc");
+            // TODO: Change this back
+            //Clipboard.SetText("design.patterns20cc");
+            Clipboard.SetText("ofekofekfacebook@gmail.com");
             FacebookService.s_UseForamttedToStrings = true;
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

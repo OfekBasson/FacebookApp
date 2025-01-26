@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using FacebookWrapper;
-using System.Runtime.Remoting.Messaging;
 using System.Threading;
 
 namespace BasicFacebookFeatures
@@ -16,7 +11,7 @@ namespace BasicFacebookFeatures
     internal partial class FormMain : Form
     {
         private string m_AppId = "917683610037169";
-        private Facade m_Facade { get; set; }
+        private Facade m_Facade;
         
         public PictureBox m_PictureBoxLeft()
         {
@@ -26,22 +21,17 @@ namespace BasicFacebookFeatures
         public FormMain()
         {
             InitializeComponent();
-            m_Facade = new Facade();
-            this.Name = "FormMain"; // Explicitly set the form's name for linksearchcontrol
-            foreach (LinkSearchListControl control in userDataGroupBox.Controls.OfType<LinkSearchListControl>())
-            {
-                control.m_Facade = m_Facade;
-            }
-
-            m_Facade.ErrorOccured += bridge_ErrorOccured;
-            postDraftBindingSource.DataSource = m_Facade.GetDrafts();
+            m_Facade = Singleton<Facade>.Instance;
+            m_Facade.ErrorOccured += facade_ErrorOccured;
+            this.Name = "FormMain"; 
+            postDraftBindingSource.DataSource = m_Facade.GetDrafts().m_ResultData;
             showOrHideControlers(false);
             this.richTextBoxPosts.Text = "Write Here...";
             FacebookService.s_CollectionLimit = 25;
         }
 
 
-        private void bridge_ErrorOccured(string i_ErrorMessage)
+        private void facade_ErrorOccured(string i_ErrorMessage)
         {
             MessageBox.Show($"Error occured, please try again or call support 052538164, and add also 8.\nError message: {i_ErrorMessage}");
         }
@@ -49,20 +39,13 @@ namespace BasicFacebookFeatures
 
         private void buttonLogin_Click(object sender, EventArgs e)
         {
-            Thread loginThread = new Thread(() =>
+            LogicLayerResult loginResult = m_Facade.LogIn(m_AppId);
+
+            if (loginResult.m_Status == LogicLayerResult.ResultStatus.Success)
             {
-                User loggedInUser = m_Facade.LogIn(m_AppId);
-
-                if (loggedInUser != null)
-                {
-                    this.Invoke(new Action(() =>
-                    {
-                        updateFormOnLogin(loggedInUser);
-                    }));
-                }
-            });
-
-            loginThread.Start(); 
+                User loggedInUser = (User)loginResult.m_ResultData;
+                updateFormOnLogin(loggedInUser);
+            }
         }
 
 
@@ -106,8 +89,11 @@ namespace BasicFacebookFeatures
 
         private void buttonLogout_Click(object sender, EventArgs e)
         {
-            m_Facade.Logout();
-            UpdateFormOnLogout();
+            LogicLayerResult logoutResult = m_Facade.Logout();
+            if (logoutResult.m_Status == LogicLayerResult.ResultStatus.Success)
+            {
+                UpdateFormOnLogout();
+            }
         }
 
         private void UpdateFormOnLogout()
@@ -130,45 +116,6 @@ namespace BasicFacebookFeatures
             buttonLogin.Enabled = true;
             buttonLogout.Enabled = false;
         }
-        private void tabPage1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void pictureBoxProfile_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void VideosDataSection_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FacebookLogo_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label1_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void buttonPost_Click(object sender, EventArgs e)
         {
@@ -178,22 +125,7 @@ namespace BasicFacebookFeatures
         {
             MessageBox.Show("Status: " + this.richTextBoxPosts.Text);
             m_Facade.PostStatus(this.richTextBoxPosts.Text);
-            this.richTextBoxPosts.Text = "Write Here...";
-        }
-
-        private void pictureBoxLeft_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void FriendsDataSection_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void GalleryDataSection_Load(object sender, EventArgs e)
-        {
-
+            richTextBoxPosts.Text = "Write Here...";
         }
 
         private void buttonSaveDraft_Click(object sender, EventArgs e)
@@ -203,12 +135,13 @@ namespace BasicFacebookFeatures
 
         private void saveDraft()
         {
-            m_Facade.AddDraft(DateTime.Now.ToString(), this.richTextBoxPosts.Text);
+            m_Facade.AddDraft(DateTime.Now.ToString(), richTextBoxPosts.Text);
         }
 
         private void buttonClearDrafts_Click(object sender, EventArgs e)
         {
             m_Facade.ClearDrafts();
         }
+
     }
 }

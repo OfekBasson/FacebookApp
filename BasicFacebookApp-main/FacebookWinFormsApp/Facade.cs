@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FacebookWrapper.ObjectModel;
 using System.Threading;
+using FacebookWrapper;
+using static BasicFacebookFeatures.LogicLayerResult;
 
 namespace BasicFacebookFeatures
 {
-    public class Facade
+    public sealed class Facade
     {
         private readonly FacebooktUserManager m_UserManager;
         private readonly DraftSManager m_DraftManager;
@@ -18,71 +20,206 @@ namespace BasicFacebookFeatures
         private List<Post> m_Posts;
         private List<Video> m_Videos;
         private List<User> m_Friends;
+        private List<Album> m_Albums;
         private List<Photo> m_Photos;
         public event Action<string> ErrorOccured;
+        public event Action<List<Post>> GetPostsCompleted;
+        public event Action<List<Video>> GetVideosCompleted;
+        public event Action<List<Album>> GetAlbumsCompleted;
+        public event Action<List<User>> GetFriendsCompleted;
+        public event Action<List<Photo>> GetPhotosCompleted;
 
-        public Facade()
+        private Facade()
         {
             m_UserManager = new FacebooktUserManager();
             m_DraftManager = new DraftSManager();
             loadDrafts();
         }
 
-        public User LogIn(string i_AppId)
+        public LogicLayerResult LogIn(string i_AppId)
         {
             try
             {
                 m_LoggedInUser = m_UserManager.EnsureLoggedIn(i_AppId);
+                return new LogicLayerResult(ResultStatus.Success, m_LoggedInUser);
             }
             catch (Exception ex)
             {
-                OnErrorOccured(ex.Message);
+                ErrorOccured.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
-
-            return m_LoggedInUser;
         }
-        
-        public List<Post> GetPosts()
+
+        public LogicLayerResult GetPosts()
         {
-            if (m_Posts == null)
+            try
             {
                 saveFacebookCollectionToBridge<Post>("post", data => m_Posts = data);
+                GetPostsCompleted?.Invoke(m_Posts);
+                return new LogicLayerResult(ResultStatus.Success, m_Posts);
             }
-
-            return m_Posts ?? new List<Post>();
+            catch (Exception ex)
+            {
+                ErrorOccured.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
         }
 
-        public List<Video> GetVideos()
+        public LogicLayerResult GetVideos()
         {
-            if (m_Videos == null)
+            try
             {
                 saveFacebookCollectionToBridge<Video>("video", data => m_Videos = data);
+                GetVideosCompleted?.Invoke(m_Videos);
+                return new LogicLayerResult(ResultStatus.Success, m_Videos);
             }
-
-            return m_Videos ?? new List<Video>();
+            catch (Exception ex)
+            {
+                ErrorOccured.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
+            
         }
 
-        public List<User> GetFriends()
+        public LogicLayerResult GetAlbums()
         {
-            if (m_Friends == null)
+            try
+            {
+                saveFacebookCollectionToBridge<Album>("album", data => m_Albums = data);
+                GetAlbumsCompleted?.Invoke(m_Albums);
+                return new LogicLayerResult(ResultStatus.Success, m_Albums);
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
+        }
+
+        public LogicLayerResult GetFriends()
+        {
+            try
             {
                 saveFacebookCollectionToBridge<User>("friend", data => m_Friends = data);
+                GetFriendsCompleted?.Invoke(m_Friends);
+                return new LogicLayerResult(ResultStatus.Success, m_Friends);
             }
-
-            return m_Friends ?? new List<User>();
-        }
-
-        public List<Photo> GetPhotos()
-        {
-            if (m_Photos == null)
+            catch (Exception ex)
             {
-              saveFacebookCollectionToBridge<Photo>("photo", data => m_Photos = data);
+                ErrorOccured.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
-
-            return m_Photos ?? new List<Photo>();
+        }
+        public LogicLayerResult GetPhotos()
+        {
+            try
+            {
+                saveFacebookCollectionToBridge<Photo>("photo", data => m_Photos = data);
+                GetPhotosCompleted?.Invoke(m_Photos);
+                return new LogicLayerResult(ResultStatus.Success, m_Photos);
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
+            
+        }
+        public LogicLayerResult Logout()
+        {
+            try
+            {
+                m_UserManager.Logout();
+                return new LogicLayerResult(ResultStatus.Success, null);
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured?.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
         }
 
-                
+        public LogicLayerResult PostStatus(string i_Status)
+        {
+            try
+            {
+                m_UserManager.PostStatus(i_Status);
+                return new LogicLayerResult(ResultStatus.Success, null);
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured?.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
+        }
+
+        public LogicLayerResult AddDraft(string i_TimeOfCreation, string i_Content)
+        {
+            try
+            {
+                m_DraftManager.AddDraft(i_TimeOfCreation, i_Content);
+                return new LogicLayerResult(ResultStatus.Success, null);
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured?.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
+        }
+
+        public LogicLayerResult SaveDraftsToFile()
+        {
+            try
+            {
+                m_DraftManager.SaveDrafts();
+                return new LogicLayerResult(ResultStatus.Success, null);
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured?.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
+        }
+
+        public LogicLayerResult GetDrafts()
+        {
+            try
+            {
+                BindingList<PostDraft> drafts = m_DraftManager.GetDrafts();
+                return new LogicLayerResult(ResultStatus.Success, drafts);
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured?.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
+        }
+
+        private void loadDrafts()
+        {
+            try
+            {
+                m_DraftManager.LoadDrafts();
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured?.Invoke(ex.Message);
+            }
+        }
+
+        public LogicLayerResult ClearDrafts()
+        {
+            try
+            {
+                m_DraftManager.ClearDrafts();
+                return new LogicLayerResult(ResultStatus.Success, null);
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured?.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
+        }
         private void saveFacebookCollectionToBridge<T>(string collectionType, Action<List<T>> assignCollection)
         {
             object collection = m_UserManager.GetDataCollectionByType(collectionType);
@@ -96,85 +233,8 @@ namespace BasicFacebookFeatures
             }
         }
 
-        protected virtual void OnErrorOccured(string i_ErrorMessage)
-        {
-            ErrorOccured?.Invoke(i_ErrorMessage);
-        }
-
-        public void Logout()
-        {
-            try
-            {
-                m_UserManager.Logout();
-            }
-            catch (Exception ex)
-            {
-                OnErrorOccured(ex.Message);
-            }
-        }
-
-
-
-
-        public void PostStatus(string i_Status)
-        {
-            try
-            {
-                m_UserManager.PostStatus(i_Status);
-            }
-            catch (Exception ex)
-            {
-                OnErrorOccured(ex.Message);
-            }
-        }
-
-        public void AddDraft(string i_TimeOfCreation, string i_Content)
-        {
-            m_DraftManager.AddDraft(i_TimeOfCreation, i_Content);
-        }
-
-        public void SaveDraftsToFile()
-        {
-            try
-            {
-                m_DraftManager.SaveDrafts();
-            }
-            catch (Exception ex)
-            {
-                OnErrorOccured(ex.Message);
-            }
-        }
-
-        public BindingList<PostDraft> GetDrafts()
-        {
-            return m_DraftManager.GetDrafts();
-        }
-
-        private void loadDrafts()
-        {
-            try
-            {
-                m_DraftManager.LoadDrafts();
-            }
-            catch (Exception ex)
-            {
-                OnErrorOccured(ex.Message);
-            }
-        }
-
-        public void ClearDrafts()
-        {
-            try
-            {
-                m_DraftManager.ClearDrafts();
-            }
-            catch (Exception ex)
-            {
-                OnErrorOccured(ex.Message);
-            }
-        }
-
     }
+
 }
 
 

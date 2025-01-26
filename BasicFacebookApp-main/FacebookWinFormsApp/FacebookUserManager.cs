@@ -65,6 +65,39 @@ namespace BasicFacebookFeatures
             return m_LoggedInUser != null;
         }
 
+        // TOOO: Change all of those to properties with get? I mean not private?
+        public FacebookObjectCollection<Post> GetPosts()
+        {
+            return m_LoggedInUser.Posts;
+        }
+        public FacebookObjectCollection<Video> GetVideos()
+        {
+            return m_LoggedInUser.Videos;
+        }
+        public FacebookObjectCollection<Album> GetAlbums()
+        {
+            return m_LoggedInUser.Albums;
+        }
+        public FacebookObjectCollection<User> GetFriends()
+        {
+            return m_LoggedInUser.Friends;
+        }
+        public FacebookObjectCollection<Photo> GetPhotos()
+        {
+            List<Photo> allPhotos = this.m_LoggedInUser.Albums.SelectMany(album => album.Photos).ToList();
+            FacebookObjectCollection<Photo> photoCollection = new FacebookObjectCollection<Photo>(allPhotos.Count);
+            foreach (var photo in allPhotos)
+            {
+                photoCollection.Add(photo);
+            }
+            return photoCollection;
+        }
+
+        public void PostStatus(string i_Status)
+        {
+           m_LoggedInUser.PostStatus(i_Status);            
+        }
+
         public object GetDataCollectionByType(string i_CollectionType)
         {
             if (i_CollectionType == "post")
@@ -93,11 +126,6 @@ namespace BasicFacebookFeatures
             {
                 throw new DataCollectionInformationException($"Collection type {i_CollectionType} isn't recognized.");
             }
-        }
-
-        public void PostStatus(string i_Status)
-        {
-           m_LoggedInUser.PostStatus(i_Status);            
         }
     }
 }
