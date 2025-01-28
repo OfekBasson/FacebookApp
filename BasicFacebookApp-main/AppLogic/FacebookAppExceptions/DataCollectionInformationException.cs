@@ -1,7 +1,7 @@
 ﻿internal class DataCollectionInformationException : Exception
 {
-    public DataCollectionInformationException(string message)
-        : base(message) { }
+    public DataCollectionInformationException(string i_Message)
+        : base(i_Message) { }
     public override string ToString()
     {
         return $"DataCollectionInformationExcption: {Message}, StackTrace: {StackTrace}";

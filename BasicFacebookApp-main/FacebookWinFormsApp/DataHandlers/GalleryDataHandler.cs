@@ -22,8 +22,8 @@ namespace BasicFacebookFeatures
                 }
                 else
                 {
-                    List<Photo> videos = new List<Photo>();
-                    return videos;
+                    List<Photo> photos = new List<Photo>();
+                    return photos;
                 }
             });
         }

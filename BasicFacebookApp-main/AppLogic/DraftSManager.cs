@@ -6,25 +6,25 @@ namespace BasicFacebookFeatures
 {
     internal class DraftSManager
     {
-        private readonly string m_DirectoryPath;
-        private readonly string m_FilePath;
+        private readonly string r_DirectoryPath;
+        private readonly string r_FilePath;
         public BindingList<PostDraft> m_Drafts { get; set; }
 
         public DraftSManager()
         {
             m_Drafts = new BindingList<PostDraft>();
-            m_DirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FacebookApp");
-            m_FilePath = Path.Combine(m_DirectoryPath, "draftPosts.xml");
-            if (!Directory.Exists(m_DirectoryPath))
+            r_DirectoryPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "FacebookApp");
+            r_FilePath = Path.Combine(r_DirectoryPath, "draftPosts.xml");
+            if (!Directory.Exists(r_DirectoryPath))
             {
-                Directory.CreateDirectory(m_DirectoryPath);
+                Directory.CreateDirectory(r_DirectoryPath);
             }
         }
 
         public void SaveDrafts()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(BindingList<PostDraft>));
-            using (Stream stream = new FileStream(m_FilePath, FileMode.Create))
+            using (Stream stream = new FileStream(r_FilePath, FileMode.Create))
             {
                 serializer.Serialize(stream, m_Drafts);
             }
@@ -32,10 +32,10 @@ namespace BasicFacebookFeatures
 
         public BindingList<PostDraft> LoadDrafts()
         {
-            if (File.Exists(m_FilePath))
+            if (File.Exists(r_FilePath))
             {
                 XmlSerializer serializer = new XmlSerializer(typeof(BindingList<PostDraft>));
-                using (Stream stream = new FileStream(m_FilePath, FileMode.Open))
+                using (Stream stream = new FileStream(r_FilePath, FileMode.Open))
                 {
                     m_Drafts = (BindingList<PostDraft>)serializer.Deserialize(stream); 
                 }
@@ -61,9 +61,9 @@ namespace BasicFacebookFeatures
         {
             m_Drafts.Clear();
             // Check if the file exists before delete
-            if (File.Exists(m_FilePath))
+            if (File.Exists(r_FilePath))
             {
-                File.Delete(m_FilePath);
+                File.Delete(r_FilePath);
             }
         }
     }

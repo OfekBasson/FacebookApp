@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace BasicFacebookFeatures
 {
-    public static class FilterFactory
+    public static class FilterRegulator
     {
         public static List<T> FilterByMember<T>(string selectedMember)
         {

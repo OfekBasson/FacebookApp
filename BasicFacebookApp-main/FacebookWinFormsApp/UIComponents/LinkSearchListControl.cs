@@ -146,8 +146,8 @@ namespace BasicFacebookFeatures
             string selectedMember = this.comboBoxFilter.SelectedItem.ToString().Replace(" ", "");
             this.listBox.DataSource = null; 
             Type dataType = ControlTypeMappings.s_ControlTypeMappings[i_ControlName];
-            MethodInfo factoryMethod = typeof(FilterFactory).GetMethod("FilterByMember").MakeGenericMethod(dataType);
-            var dataSource = factoryMethod.Invoke(null, new object[] { selectedMember, m_Facade });
+            MethodInfo factoryMethod = typeof(FilterRegulator).GetMethod("FilterByMember").MakeGenericMethod(dataType);
+            var dataSource = factoryMethod.Invoke(null, new object[] { selectedMember });
             if (i_ControlName == "PostsDataSection" && selectedMember == "CreatedTime")
             {
                 this.listBox.DisplayMember = selectedMember; 
@@ -167,8 +167,8 @@ namespace BasicFacebookFeatures
                 String propertyName = this.comboBoxFilter.SelectedItem.ToString().Replace(" ", "");
                 string i_ControlName = this.Name;
                 Type dataType = ControlTypeMappings.s_ControlTypeMappings[i_ControlName];
-                MethodInfo factoryMethod = typeof(FilterFactory).GetMethod("FilterByProperty").MakeGenericMethod(dataType);
-                var dataSource = factoryMethod.Invoke(null, new object[] { propertyName, textBoxFilter.Text, m_Facade, i_ControlName });
+                MethodInfo factoryMethod = typeof(FilterRegulator).GetMethod("FilterByProperty").MakeGenericMethod(dataType);
+                var dataSource = factoryMethod.Invoke(null, new object[] { propertyName, textBoxFilter.Text, i_ControlName });
                 this.listBox.DataSource = dataSource;
             }
         }

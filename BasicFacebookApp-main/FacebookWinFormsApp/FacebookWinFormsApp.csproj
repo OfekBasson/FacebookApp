@@ -79,13 +79,11 @@
   <ItemGroup>
     <Compile Include="DataHandlers\ControlDataHandlerFactory.cs" />
     <Compile Include="ControlTypeMappings.cs" />
-    <Compile Include="Filtering\FilterFactory.cs" />
+    <Compile Include="Filtering\FilterRegulator.cs" />
     <Compile Include="DataHandlers\FriendsDataHandler.cs" />
     <Compile Include="DataHandlers\GalleryDataHandler.cs" />
     <Compile Include="DataHandlers\IControlDataHandler.cs" />
     <Compile Include="Filtering\ItemsFilter.cs" />
-    <Compile Include="FacebookAppExceptions\DataCollectionInformationException.cs" />
-    <Compile Include="FacebookAppExceptions\LoginException .cs" />
     <Compile Include="DataHandlers\PostsDataHandler.cs" />
     <Compile Include="UIComponents\FormMain.cs">
       <SubType>Form</SubType>

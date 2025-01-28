@@ -120,9 +120,9 @@ namespace BasicFacebookFeatures
 
         private void buttonPost_Click(object sender, EventArgs e)
         {
-            PostStatus();
+            postStatus();
         }
-        private void PostStatus()
+        private void postStatus()
         {
             MessageBox.Show("Status: " + this.richTextBoxPosts.Text);
             m_Facade.PostStatus(this.richTextBoxPosts.Text);
