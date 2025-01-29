@@ -27,6 +27,7 @@ namespace BasicFacebookFeatures
                 }
             });
         }
+
         public List<string> GetFilterOptions()
         {
             return new List<string> { "Name", "Location", "Created Time" };

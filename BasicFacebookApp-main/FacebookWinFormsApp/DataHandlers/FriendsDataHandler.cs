@@ -10,7 +10,6 @@ namespace BasicFacebookFeatures
 {
     public class FriendsDataHandler : IControlDataHandler<User>
     {
-        // TODO: Move those classes under the facade...
         public  Task<List<User>> RunDataTask()
         {
             return Task.Run(() =>
@@ -28,6 +27,7 @@ namespace BasicFacebookFeatures
                 }
             });
         }
+
         public List<string> GetFilterOptions()
         {
             return new List<string> { "Name", "Location", "Email" };

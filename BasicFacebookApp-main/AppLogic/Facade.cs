@@ -103,6 +103,7 @@ namespace BasicFacebookFeatures
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
         }
+
         public LogicLayerResult GetPhotos()
         {
             try
@@ -118,6 +119,7 @@ namespace BasicFacebookFeatures
             }
             
         }
+
         public LogicLayerResult Logout()
         {
             try

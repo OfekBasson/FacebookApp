@@ -35,6 +35,7 @@ namespace AppLogic.HelperClasses
                         }
                     }
                 }
+
                 return s_Instance;
             }
         }
