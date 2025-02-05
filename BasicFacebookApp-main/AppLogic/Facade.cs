@@ -7,7 +7,7 @@ namespace BasicFacebookFeatures
 {
     public sealed class Facade
     {
-        private readonly FacebooktUserManager m_UserManager;
+        private readonly IUserManager m_UserManager;
         private readonly DraftSManager m_DraftManager;
         public User m_LoggedInUser { get; set; }
         private List<Post> m_Posts;
@@ -24,7 +24,7 @@ namespace BasicFacebookFeatures
 
         private Facade()
         {
-            m_UserManager = new FacebooktUserManager();
+            m_UserManager = new LoggingUserManagerDecorator(new FacebooktUserManager());
             m_DraftManager = new DraftSManager();
             loadDrafts();
         }
@@ -38,7 +38,7 @@ namespace BasicFacebookFeatures
             }
             catch (Exception ex)
             {
-                ErrorOccured.Invoke(ex.Message);
+                ErrorOccured?.Invoke(ex.Message);
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
         }
@@ -53,7 +53,7 @@ namespace BasicFacebookFeatures
             }
             catch (Exception ex)
             {
-                ErrorOccured.Invoke(ex.Message);
+                ErrorOccured?.Invoke(ex.Message);
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
         }
@@ -68,7 +68,7 @@ namespace BasicFacebookFeatures
             }
             catch (Exception ex)
             {
-                ErrorOccured.Invoke(ex.Message);
+                ErrorOccured?.Invoke(ex.Message);
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
             
@@ -84,7 +84,7 @@ namespace BasicFacebookFeatures
             }
             catch (Exception ex)
             {
-                ErrorOccured.Invoke(ex.Message);
+                ErrorOccured?.Invoke(ex.Message);
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
         }
@@ -99,7 +99,7 @@ namespace BasicFacebookFeatures
             }
             catch (Exception ex)
             {
-                ErrorOccured.Invoke(ex.Message);
+                ErrorOccured?.Invoke(ex.Message);
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
         }
@@ -114,7 +114,7 @@ namespace BasicFacebookFeatures
             }
             catch (Exception ex)
             {
-                ErrorOccured.Invoke(ex.Message);
+                ErrorOccured?.Invoke(ex.Message);
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
             

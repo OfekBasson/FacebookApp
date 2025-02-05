@@ -3,7 +3,7 @@ using FacebookWrapper.ObjectModel;
 
 namespace BasicFacebookFeatures
 {
-    internal class FacebooktUserManager
+    internal class FacebooktUserManager: IUserManager
     {
         private User m_LoggedInUser { get; set; }
         
