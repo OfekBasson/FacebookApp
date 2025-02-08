@@ -16,7 +16,6 @@ namespace BasicFacebookFeatures
                 "MyApp", "Logs");
 
             Directory.CreateDirectory(logDirectory);
-
             m_LogFilePath = Path.Combine(logDirectory, "log.txt");
         }
         private void LogToFile(string message)

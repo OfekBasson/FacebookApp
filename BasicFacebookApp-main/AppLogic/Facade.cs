@@ -25,8 +25,16 @@ namespace BasicFacebookFeatures
         private Facade()
         {
             m_UserManager = new LoggingUserManagerDecorator(new FacebooktUserManager());
-            m_DraftManager = new DraftSManager();
-            loadDrafts();
+            try
+            {
+                m_DraftManager = new DraftSManager();
+                m_DraftManager.SetDraftStrategy(new XmlDraftStrategy());
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured?.Invoke(ex.Message);
+                new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
         }
 
         public LogicLayerResult LogIn(string i_AppId)
@@ -71,7 +79,6 @@ namespace BasicFacebookFeatures
                 ErrorOccured?.Invoke(ex.Message);
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
-            
         }
 
         public LogicLayerResult GetAlbums()
@@ -117,7 +124,6 @@ namespace BasicFacebookFeatures
                 ErrorOccured?.Invoke(ex.Message);
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
-            
         }
 
         public LogicLayerResult Logout()
@@ -180,25 +186,13 @@ namespace BasicFacebookFeatures
         {
             try
             {
-                BindingList<PostDraft> drafts = m_DraftManager.GetDrafts();
+                BindingList<PostDraft> drafts = m_DraftManager.m_Drafts;
                 return new LogicLayerResult(ResultStatus.Success, drafts);
             }
             catch (Exception ex)
             {
                 ErrorOccured?.Invoke(ex.Message);
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
-            }
-        }
-
-        private void loadDrafts()
-        {
-            try
-            {
-                m_DraftManager.LoadDrafts();
-            }
-            catch (Exception ex)
-            {
-                ErrorOccured?.Invoke(ex.Message);
             }
         }
 
@@ -215,6 +209,27 @@ namespace BasicFacebookFeatures
                 return new LogicLayerResult(ResultStatus.Failure, ex.Message);
             }
         }
+
+        public LogicLayerResult SetDraftStrategy(bool i_IsChecked)
+        {
+            try
+            {
+                if (i_IsChecked) {
+                    m_DraftManager.SetDraftStrategy(new JsonDraftStrategy());
+                }
+                else
+                {
+                    m_DraftManager.SetDraftStrategy(new XmlDraftStrategy());
+                }
+                return new LogicLayerResult(ResultStatus.Success, null);
+            }
+            catch (Exception ex)
+            {
+                ErrorOccured?.Invoke(ex.Message);
+                return new LogicLayerResult(ResultStatus.Failure, ex.Message);
+            }
+        }
+
         private void saveFacebookCollectionToBridge<T>(string collectionType, Action<List<T>> assignCollection)
         {
             object collection = m_UserManager.GetDataCollectionByType(collectionType);

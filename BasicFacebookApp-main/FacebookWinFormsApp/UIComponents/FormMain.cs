@@ -78,6 +78,7 @@ namespace BasicFacebookFeatures
             this.buttonSaveDraft.Visible = i_IsShown;
             this.listBoxDrafts.Visible = i_IsShown;
             this.panelDraft.Visible = i_IsShown;
+            this.checkBoxJsonDraft.Visible = i_IsShown;
         }
 
         private void updateButtonsOnLogin()
@@ -144,5 +145,9 @@ namespace BasicFacebookFeatures
             m_Facade.ClearDrafts();
         }
 
+        private void checkBoxJsonDraft_CheckedChanged(object sender, EventArgs e)
+        {
+            m_Facade.SetDraftStrategy(checkBoxJsonDraft.Checked);
+        }
     }
 }
